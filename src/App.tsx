@@ -15,6 +15,9 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Debug export
+  (window as any)._mprDebug = { settlements, selectedCaseId, currentView };
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);

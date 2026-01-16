@@ -28,22 +28,20 @@ const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
 
     console.log('[Paralegal] --- RENDER ---');
     console.log('[Paralegal] Prop selectedCaseId:', JSON.stringify(selectedCaseId));
-    console.log('[Paralegal] Settlements count:', settlements.length);
 
-    if (settlements.length > 0) {
-        console.log('[Paralegal] Sample Settlement ID:', JSON.stringify(settlements[0].settlement_id));
-        console.log('[Paralegal] Match attempt:', selectedCaseId === settlements[0].settlement_id);
-    }
-
+    // Robust search logic
     const selectedCase = settlements.find(s => {
-        const match = s.settlement_id === selectedCaseId;
-        if (selectedCaseId && !match) {
-            // console.log(`[Paralegal] No match for ${s.settlement_id} against ${selectedCaseId}`);
-        }
-        return match;
+        if (!selectedCaseId) return false;
+        const s_id = String(s.settlement_id).trim();
+        const p_id = String(selectedCaseId).trim();
+        const isMatch = s_id === p_id;
+        return isMatch;
     });
 
-    console.log('[Paralegal] Derived selectedCase found:', !!selectedCase);
+    console.log('[Paralegal] Case Found:', !!selectedCase);
+    if (selectedCaseId && !selectedCase) {
+        console.warn('[Paralegal] MISSING CASE. Available IDs:', settlements.map(s => s.settlement_id));
+    }
 
     // Initial load of outcome data
     useEffect(() => {
