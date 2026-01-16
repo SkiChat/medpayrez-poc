@@ -136,12 +136,17 @@ const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
             };
 
             setRecommendation(mappedRec);
-        } catch (error) {
+        } catch (error: any) {
             console.error('[Paralegal] Strategy Generation Failed:', error);
-            alert("AI Error: Failed to reach strategy engine. Please ensure OPENROUTER_API_KEY is configured.");
 
-            // Fallback to local mock for demo continuity if needed
-            // (Keeping it clean for now)
+            let errorMessage = "AI Error: Failed to reach strategy engine.";
+            if (error.message?.includes("502")) {
+                errorMessage = "AI Error: The server is taking too long to respond (502). Please try again.";
+            } else if (error.message?.includes("500")) {
+                errorMessage = "AI Error: Server configuration issue (500). Please check environment variables.";
+            }
+
+            alert(errorMessage);
         } finally {
             setIsGenerating(false);
         }
