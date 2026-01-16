@@ -8,15 +8,26 @@ const App: React.FC = () => {
   const [settlements, setSettlements] = useState<Settlement[]>([]);
   const [providers, setProviders] = useState<Provider[]>([]);
   const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null);
-
-  console.log('[App] Render - selectedCaseId:', selectedCaseId);
-  console.log('[App] Settlements count:', settlements.length);
   const [currentView, setCurrentView] = useState<'Paralegal' | 'Attorney'>('Paralegal');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Debug export
-  (window as any)._mprDebug = { settlements, selectedCaseId, currentView };
+  // Consolidated case selection handler
+  const handleCaseSelect = (id: string | null) => {
+    console.log('[App] handleCaseSelect triggered for ID:', id);
+    setSelectedCaseId(id);
+  };
+
+  // Sync debug state to window
+  useEffect(() => {
+    (window as any)._mprDebug = {
+      settlements,
+      selectedCaseId,
+      currentView,
+      timestamp: new Date().toISOString()
+    };
+    console.log('[App] State Updated:', { selectedCaseId, currentView });
+  }, [settlements, selectedCaseId, currentView]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,17 +102,14 @@ const App: React.FC = () => {
                 settlements={settlements}
                 providers={providers}
                 selectedCaseId={selectedCaseId}
-                onCaseSelect={(id: string | null) => {
-                  console.log('[App] onCaseSelect called with:', id);
-                  setSelectedCaseId(id);
-                }}
+                onCaseSelect={handleCaseSelect}
               />
             ) : (
               <AttorneyDashboard
                 settlements={settlements}
                 providers={providers}
                 selectedCaseId={selectedCaseId}
-                onCaseSelect={setSelectedCaseId}
+                onCaseSelect={handleCaseSelect}
               />
             )}
           </div>

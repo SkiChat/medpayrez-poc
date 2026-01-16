@@ -71,8 +71,13 @@ const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
     }, [selectedCaseId, globalOutcomes, selectedCase]);
 
     const handleCaseChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const id = e.target.value || null;
-        console.log('[Paralegal] handleCaseChange raw value:', JSON.stringify(e.target.value));
+        const rawValue = e.target.value;
+        console.log('[Paralegal] handleCaseChange triggered with rawValue:', JSON.stringify(rawValue));
+
+        // Explicitly handle empty string as null
+        const id = rawValue && rawValue !== "" ? String(rawValue) : null;
+
+        console.log('[Paralegal] calling onCaseSelect with parsed id:', JSON.stringify(id));
         onCaseSelect(id);
     };
 
