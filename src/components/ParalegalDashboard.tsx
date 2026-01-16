@@ -26,7 +26,24 @@ const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
     const [riskTolerance, setRiskTolerance] = useState<'Low' | 'Moderate' | 'High'>('Moderate');
     const [providerStrategy, setProviderStrategy] = useState<'Cooperative' | 'Defensive' | 'Aggressive'>('Defensive');
 
-    const selectedCase = settlements.find(s => s.settlement_id === selectedCaseId);
+    console.log('[Paralegal] --- RENDER ---');
+    console.log('[Paralegal] Prop selectedCaseId:', JSON.stringify(selectedCaseId));
+    console.log('[Paralegal] Settlements count:', settlements.length);
+
+    if (settlements.length > 0) {
+        console.log('[Paralegal] Sample Settlement ID:', JSON.stringify(settlements[0].settlement_id));
+        console.log('[Paralegal] Match attempt:', selectedCaseId === settlements[0].settlement_id);
+    }
+
+    const selectedCase = settlements.find(s => {
+        const match = s.settlement_id === selectedCaseId;
+        if (selectedCaseId && !match) {
+            // console.log(`[Paralegal] No match for ${s.settlement_id} against ${selectedCaseId}`);
+        }
+        return match;
+    });
+
+    console.log('[Paralegal] Derived selectedCase found:', !!selectedCase);
 
     // Initial load of outcome data
     useEffect(() => {
@@ -57,6 +74,7 @@ const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
 
     const handleCaseChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const id = e.target.value || null;
+        console.log('[Paralegal] handleCaseChange raw value:', JSON.stringify(e.target.value));
         onCaseSelect(id);
     };
 

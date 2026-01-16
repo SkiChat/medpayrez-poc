@@ -8,6 +8,9 @@ const App: React.FC = () => {
   const [settlements, setSettlements] = useState<Settlement[]>([]);
   const [providers, setProviders] = useState<Provider[]>([]);
   const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null);
+
+  console.log('[App] Render - selectedCaseId:', selectedCaseId);
+  console.log('[App] Settlements count:', settlements.length);
   const [currentView, setCurrentView] = useState<'Paralegal' | 'Attorney'>('Paralegal');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -85,7 +88,10 @@ const App: React.FC = () => {
                 settlements={settlements}
                 providers={providers}
                 selectedCaseId={selectedCaseId}
-                onCaseSelect={setSelectedCaseId}
+                onCaseSelect={(id: string | null) => {
+                  console.log('[App] onCaseSelect called with:', id);
+                  setSelectedCaseId(id);
+                }}
               />
             ) : (
               <AttorneyDashboard
