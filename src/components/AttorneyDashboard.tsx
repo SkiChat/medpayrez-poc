@@ -12,13 +12,15 @@ interface AttorneyDashboardProps {
 
 const AttorneyDashboard: React.FC<AttorneyDashboardProps> = ({
     settlements,
-    selectedCaseId: externalSelectedCaseId,
+    providers: _,
+    selectedCaseId,
     onCaseSelect
 }) => {
-    const [selectedCaseId, setSelectedCaseId] = useState<string | null>(externalSelectedCaseId);
     const [globalOutcomes, setGlobalOutcomes] = useState<Lien[]>([]);
     const [caseLiens, setCaseLiens] = useState<Lien[]>([]);
     const [recommendation, setRecommendation] = useState<AIRecType | null>(null);
+
+    const selectedCase = settlements.find(s => s.settlement_id === selectedCaseId);
 
     useEffect(() => {
         fetch('/historical_outcomes.json')
@@ -66,11 +68,8 @@ const AttorneyDashboard: React.FC<AttorneyDashboardProps> = ({
     }, [selectedCaseId, globalOutcomes, settlements]);
 
     const handleCaseSelect = (id: string) => {
-        setSelectedCaseId(id);
         onCaseSelect(id);
     };
-
-    const selectedCase = settlements.find(s => s.settlement_id === selectedCaseId);
 
     return (
         <div className="space-y-12 py-6 animate-fade-in">

@@ -14,10 +14,9 @@ interface ParalegalDashboardProps {
 const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
     settlements,
     providers: _,
-    selectedCaseId: externalSelectedCaseId,
+    selectedCaseId,
     onCaseSelect
 }) => {
-    const [selectedCaseId, setSelectedCaseId] = useState<string | null>(externalSelectedCaseId);
     const [caseLiens, setCaseLiens] = useState<Lien[]>([]);
     const [globalOutcomes, setGlobalOutcomes] = useState<Lien[]>([]);
     const [recommendation, setRecommendation] = useState<AIRecType | null>(null);
@@ -27,6 +26,9 @@ const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
     const [riskTolerance, setRiskTolerance] = useState<'Low' | 'Moderate' | 'High'>('Moderate');
     const [providerStrategy, setProviderStrategy] = useState<'Cooperative' | 'Defensive' | 'Aggressive'>('Defensive');
 
+    const selectedCase = settlements.find(s => s.settlement_id === selectedCaseId);
+
+    // Initial load of outcome data
     useEffect(() => {
         fetch('/historical_outcomes.json')
             .then(res => res.json())
@@ -36,6 +38,7 @@ const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
             .catch(err => console.error("Error loading outcomes:", err));
     }, []);
 
+    // Effect to sync state when case changes
     useEffect(() => {
         if (selectedCaseId && globalOutcomes.length > 0) {
             const filtered = globalOutcomes.filter(l => l.settlement_id === selectedCaseId);
@@ -43,20 +46,18 @@ const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
         } else {
             setCaseLiens([]);
         }
-    }, [selectedCaseId, globalOutcomes]);
 
-    const selectedCase = settlements.find(s => s.settlement_id === selectedCaseId);
-    useEffect(() => {
         if (selectedCase) {
             setSettlementAmount(selectedCase.settlement_amount);
         }
-    }, [selectedCaseId]);
+
+        // Reset recommendation when case changes
+        setRecommendation(null);
+    }, [selectedCaseId, globalOutcomes, selectedCase]);
 
     const handleCaseChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const id = e.target.value || null;
-        setSelectedCaseId(id);
         onCaseSelect(id);
-        setRecommendation(null);
     };
 
     const generateStrategy = () => {
