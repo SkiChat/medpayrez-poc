@@ -1,0 +1,54 @@
+[
+  {
+    "lien_id": "LIEN-2024-001-001",
+    "settlement_id": "SETTLE-2024-001",
+    "provider_name": "Central Hospital",
+    "service_type": "Emergency Care",
+    "charged_amount": 15000,
+    "original_lien_amount": 15000,
+    "ai_recommended_amount": 9000,
+    "reduction_statute": "CA CACI 1668.5 (40% reduction)",
+    "provider_response": "Accepted",
+    "negotiated_amount": 9000,
+    "status": "Resolved"
+  },
+  {
+    "lien_id": "LIEN-2024-001-002",
+    "settlement_id": "SETTLE-2024-001",
+    "provider_name": "Orthopedic Specialists",
+    "service_type": "Surgery",
+    "charged_amount": 8500,
+    "original_lien_amount": 8500,
+    "ai_recommended_amount": 5100,
+    "reduction_statute": "CA CACI 1668.5 (40% reduction)",
+    "provider_response": "Negotiating",
+    "negotiated_amount": 5100,
+    "status": "Pending"
+  },
+  {
+    "lien_id": "LIEN-2024-001-003",
+    "settlement_id": "SETTLE-2024-001",
+    "provider_name": "City MRI Center",
+    "service_type": "Diagnostic Imaging",
+    "charged_amount": 3200,
+    "original_lien_amount": 3200,
+    "ai_recommended_amount": 1920,
+    "reduction_statute": "CA CACI 1668.5 (40% reduction)",
+    "provider_response": "Pending Offer",
+    "negotiated_amount": 1920,
+    "status": "Pending"
+  },
+  {
+    "lien_id": "LIEN-2024-001-004",
+    "settlement_id": "SETTLE-2024-001",
+    "provider_name": "Metro Physical Therapy",
+    "service_type": "Rehabilitation",
+    "charged_amount": 5600,
+    "original_lien_amount": 5600,
+    "ai_recommended_amount": 3360,
+    "reduction_statute": "CA CACI 1668.5 (40% reduction)",
+    "provider_response": "Rejected - Negotiating",
+    "negotiated_amount": 4200,
+    "status": "Counter-Offer"
+  }
+]
