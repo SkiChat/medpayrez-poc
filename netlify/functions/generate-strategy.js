@@ -1,6 +1,6 @@
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
 
-export const handler = async (event) => {
+exports.handler = async (event, context) => {
     // 1. Method Check
     if (event.httpMethod !== 'POST') {
         return {
@@ -9,14 +9,15 @@ export const handler = async (event) => {
         };
     }
 
-    console.log('[Netlify Function] Execution Started');
+    console.log('[Netlify Function] Execution Started (CommonJS)');
 
     try {
         // 2. Parse Body
         if (!event.body) {
             throw new Error('Missing request body');
         }
-        const { caseDetails, scenario } = JSON.parse(event.body);
+        const parsedBody = JSON.parse(event.body);
+        const { caseDetails, scenario } = parsedBody;
         console.log('[Netlify Function] Request parsed for client:', caseDetails?.client_name);
 
         // 3. Environment Variable Check
@@ -69,86 +70,68 @@ export const handler = async (event) => {
       }
     }`;
 
-        console.log('[Netlify Function] Calling OpenRouter API...');
+        console.log('[Netlify Function] Calling OpenRouter API via node-fetch...');
 
-        // 5. OpenRouter Call with Timeout Handling
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 25000); // 25s timeout
+        // 5. OpenRouter Call
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`,
+                'HTTP-Referer': 'https://medpayrez.netlify.app',
+                'X-Title': 'MedPayRez AI'
+            },
+            body: JSON.stringify({
+                model: 'mistralai/mistral-7b-instruct',
+                messages: [
+                    {
+                        role: 'system',
+                        content: 'You are a legal AI strategy engine. Return ONLY valid JSON.'
+                    },
+                    {
+                        role: 'user',
+                        content: systemPrompt
+                    }
+                ],
+                response_format: { type: 'json_object' },
+                temperature: 0.7
+            })
+        });
 
-        try {
-            const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`,
-                    'HTTP-Referer': 'https://medpayrez.netlify.app',
-                    'X-Title': 'MedPayRez AI'
-                },
-                signal: controller.signal,
-                body: JSON.stringify({
-                    model: 'mistralai/mistral-7b-instruct',
-                    messages: [
-                        {
-                            role: 'system',
-                            content: 'You are a legal AI strategy engine. Return ONLY valid JSON.'
-                        },
-                        {
-                            role: 'user',
-                            content: systemPrompt
-                        }
-                    ],
-                    response_format: { type: 'json_object' },
-                    temperature: 0.7
-                })
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('[Netlify Function] OpenRouter Error Response:', {
+                status: response.status,
+                statusText: response.statusText,
+                body: errorText
             });
-
-            clearTimeout(timeoutId);
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('[Netlify Function] OpenRouter Error Response:', {
-                    status: response.status,
-                    statusText: response.statusText,
-                    body: errorText
-                });
-                return {
-                    statusCode: response.status,
-                    body: JSON.stringify({
-                        error: 'OpenRouter API error',
-                        details: errorText,
-                        status: response.status
-                    })
-                };
-            }
-
-            const data = await response.json();
-            console.log('[Netlify Function] OpenRouter Response Success');
-
-            if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-                throw new Error('Malformed response from OpenRouter');
-            }
-
-            const aiContent = JSON.parse(data.choices[0].message.content);
-
             return {
-                statusCode: 200,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                body: JSON.stringify(aiContent)
+                statusCode: response.status,
+                body: JSON.stringify({
+                    error: 'OpenRouter API error',
+                    details: errorText,
+                    status: response.status
+                })
             };
-
-        } catch (fetchError) {
-            if (fetchError.name === 'AbortError') {
-                console.error('[Netlify Function] TIMEOUT: OpenRouter took too long (>25s)');
-                return {
-                    statusCode: 504,
-                    body: JSON.stringify({ error: 'AI Engine timeout' })
-                };
-            }
-            throw fetchError;
         }
+
+        const data = await response.json();
+        console.log('[Netlify Function] OpenRouter Response Success');
+
+        if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+            throw new Error('Malformed response from OpenRouter');
+        }
+
+        const aiContentString = data.choices[0].message.content;
+        const aiContent = JSON.parse(aiContentString);
+
+        return {
+            statusCode: 200,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(aiContent)
+        };
 
     } catch (error) {
         console.error('[Netlify Function] Critical Handler Error:', error);
@@ -156,8 +139,7 @@ export const handler = async (event) => {
             statusCode: 500,
             body: JSON.stringify({
                 error: 'Internal Server Error',
-                message: error.message,
-                stack: error.stack?.split('\n').slice(0, 3).join('\n') // Safely log top of stack
+                message: error.message
             })
         };
     }
