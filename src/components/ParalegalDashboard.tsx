@@ -9,13 +9,15 @@ interface ParalegalDashboardProps {
     providers: Provider[];
     selectedCaseId: string | null;
     onCaseSelect: (id: string | null) => void;
+    openNewCaseModal: () => void;
 }
 
 const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
     settlements,
     providers: _,
     selectedCaseId,
-    onCaseSelect
+    onCaseSelect,
+    openNewCaseModal
 }) => {
     const [caseLiens, setCaseLiens] = useState<Lien[]>([]);
     const [globalOutcomes, setGlobalOutcomes] = useState<Lien[]>([]);
@@ -166,6 +168,14 @@ const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
                     </div>
                 </div>
+
+                <button
+                    onClick={openNewCaseModal}
+                    className="h-16 px-6 rounded-2xl font-black text-xs uppercase tracking-widest text-brand-blue bg-brand-blue/5 hover:bg-brand-blue/10 transition-all flex items-center gap-2 whitespace-nowrap border-2 border-brand-blue/10"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                    New Case
+                </button>
 
                 <button
                     onClick={generateStrategy}

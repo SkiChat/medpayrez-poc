@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import type { Settlement, Provider } from './types';
+import type { Settlement, Provider, Lien } from './types';
 import Header from './components/Header';
 import ParalegalDashboard from './components/ParalegalDashboard';
 import AttorneyDashboard from './components/AttorneyDashboard';
+import NewCaseModal from './components/NewCaseModal';
 
 const App: React.FC = () => {
   const [settlements, setSettlements] = useState<Settlement[]>([]);
@@ -11,6 +12,7 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<'Paralegal' | 'Attorney'>('Paralegal');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isNewCaseModalOpen, setIsNewCaseModalOpen] = useState(false);
 
   // Consolidated case selection handler
   const handleCaseSelect = (id: string | null) => {
@@ -59,6 +61,14 @@ const App: React.FC = () => {
     fetchData();
   }, []);
 
+  const handleCreateNewCase = (newSettlement: Settlement, _newLiens: Lien[]) => {
+    // In a real app we'd also push newLiens to our outcomes state or DB
+    // For the PoC, we just add the settlement and select it
+    setSettlements(prev => [newSettlement, ...prev]);
+    setSelectedCaseId(newSettlement.settlement_id);
+    setIsNewCaseModalOpen(false);
+  };
+
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50 p-6">
@@ -103,6 +113,7 @@ const App: React.FC = () => {
                 providers={providers}
                 selectedCaseId={selectedCaseId}
                 onCaseSelect={handleCaseSelect}
+                openNewCaseModal={() => setIsNewCaseModalOpen(true)}
               />
             ) : (
               <AttorneyDashboard
@@ -121,6 +132,12 @@ const App: React.FC = () => {
           &copy; 2026 MedPayRez AI Lien Negotiation Strategy PoC • Proprietary & Confidential
         </p>
       </footer>
+
+      <NewCaseModal
+        isOpen={isNewCaseModalOpen}
+        onClose={() => setIsNewCaseModalOpen(false)}
+        onSave={handleCreateNewCase}
+      />
     </div>
   );
 };
