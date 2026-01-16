@@ -81,44 +81,68 @@ const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
         onCaseSelect(id);
     };
 
-    const generateStrategy = () => {
+    const generateStrategy = async () => {
         if (!selectedCase) return;
         setIsGenerating(true);
+        setRecommendation(null);
 
-        setTimeout(() => {
-            const riskFactor = riskTolerance === 'High' ? 0.15 : riskTolerance === 'Moderate' ? 0.05 : 0;
-            const strategyFactor = providerStrategy === 'Aggressive' ? -0.1 : providerStrategy === 'Defensive' ? -0.05 : 0;
+        try {
+            console.log('[Paralegal] Invoking AI Strategy Engine...');
+            const response = await fetch('/.netlify/functions/generate-strategy', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    caseDetails: selectedCase,
+                    scenario: {
+                        settlementAmount,
+                        riskTolerance,
+                        providerStrategy
+                    }
+                })
+            });
 
-            const openingPercent = Math.min(60, Math.floor((0.40 + riskFactor + strategyFactor) * 100));
-            const openingAmount = Math.floor(selectedCase.total_lien_amount * (1 - openingPercent / 100));
+            if (!response.ok) {
+                throw new Error(`AI Engine Error: ${response.statusText}`);
+            }
 
-            const mockRec: AIRecType = {
-                provider_name: "Integrated Med Group",
+            const aiData = await response.json();
+            console.log('[Paralegal] AI Response Data:', aiData);
+
+            // Map AI specific response to internal AIRecType
+            const mappedRec: AIRecType = {
+                provider_name: caseLiens[0]?.provider_name || "Primary Care Provider",
                 original_lien: selectedCase.total_lien_amount,
-                opening_offer_percentage: openingPercent,
-                opening_offer_amount: openingAmount,
+                opening_offer_percentage: Math.round(aiData.reductionTarget * 100),
+                opening_offer_amount: aiData.openingPayout,
                 likely_acceptance_range: {
-                    low_percent: openingPercent - 5,
-                    high_percent: openingPercent + 5,
-                    low_amount: Math.floor(openingAmount * 0.95),
-                    high_amount: Math.floor(openingAmount * 1.05)
+                    low_percent: Math.max(0, Math.round((aiData.reductionTarget - 0.05) * 100)),
+                    high_percent: Math.min(100, Math.round((aiData.reductionTarget + 0.05) * 100)),
+                    low_amount: Math.floor(aiData.openingPayout * 0.92),
+                    high_amount: Math.floor(aiData.openingPayout * 1.08)
                 },
-                win_probability: riskTolerance === 'High' ? 0.65 : 0.88,
-                statutory_basis: "CA Civil Code §3040 / Common Fund",
+                win_probability: aiData.probabilityAnalysis.yield,
+                statutory_basis: aiData.probabilityAnalysis.statutoryBasis,
                 provider_insights: {
-                    historical_avg_reduction: 0.39,
-                    acceptance_rate: 0.92,
-                    response_time_days: 1.4
+                    historical_avg_reduction: aiData.providerIntelligence.histYield,
+                    acceptance_rate: aiData.providerIntelligence.acceptRate,
+                    response_time_days: aiData.providerIntelligence.resolutionSpeed
                 },
-                risk_flags: providerStrategy === 'Aggressive' ? ["Provider flagged for aggressive billing history", "Statutory violation risk"] : [],
+                risk_flags: riskTolerance === 'High' ? ["Aggressive reduction target", "Low win probability"] : [],
                 compliance_status: "COMPLIANT",
-                confidence_score: 0.94,
-                ai_reasoning: `Recommended ${openingPercent}% reduction to maximize net client recovery while staying within §3040 safe harbor zones. Strategy calibrated for ${riskTolerance} risk profile against a ${providerStrategy} provider profile.`
+                confidence_score: aiData.aiTrustArchitecture.confidence,
+                ai_reasoning: aiData.neuralFrameworkAnalysis
             };
 
-            setRecommendation(mockRec);
+            setRecommendation(mappedRec);
+        } catch (error) {
+            console.error('[Paralegal] Strategy Generation Failed:', error);
+            alert("AI Error: Failed to reach strategy engine. Please ensure OPENROUTER_API_KEY is configured.");
+
+            // Fallback to local mock for demo continuity if needed
+            // (Keeping it clean for now)
+        } finally {
             setIsGenerating(false);
-        }, 1500);
+        }
     };
 
     return (
