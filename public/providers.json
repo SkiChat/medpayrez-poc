@@ -1,0 +1,18 @@
+[
+  {
+    "provider_name": "Central Hospital",
+    "provider_type": "Hospital",
+    "npi": "1234567890",
+    "avg_reduction": 0.39,
+    "response_time": 1.2,
+    "acceptance_rate": 0.98
+  },
+  {
+    "provider_name": "Orthopedic Specialists",
+    "provider_type": "Specialists",
+    "npi": "1234567891",
+    "avg_reduction": 0.35,
+    "response_time": 2.1,
+    "acceptance_rate": 0.92
+  }
+]

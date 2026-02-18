@@ -1,0 +1,580 @@
+{
+    "providers": [
+        {
+            "id": "prov_001",
+            "name": "Dr. Sarah Chen",
+            "specialty": "Orthopedics",
+            "practiceName": "Summit Ortho",
+            "state": "CA"
+        },
+        {
+            "id": "prov_002",
+            "name": "Dr. Michael Ross",
+            "specialty": "Chiropractic",
+            "practiceName": "Ross Spine Center",
+            "state": "NV"
+        },
+        {
+            "id": "prov_003",
+            "name": "Advanced Imaging Center",
+            "specialty": "Radiology",
+            "practiceName": "Advanced Imaging",
+            "state": "TX"
+        },
+        {
+            "id": "prov_004",
+            "name": "Dr. Emily Blunt",
+            "specialty": "Pain Management",
+            "practiceName": "Relief Pain Institute",
+            "state": "FL"
+        },
+        {
+            "id": "prov_005",
+            "name": "City Physical Therapy",
+            "specialty": "Physical Therapy",
+            "practiceName": "City PT",
+            "state": "NY"
+        },
+        {
+            "id": "prov_006",
+            "name": "Dr. James Wilson",
+            "specialty": "Neurology",
+            "practiceName": "Wilson Neuro",
+            "state": "GA"
+        }
+    ],
+    "attorneys": [
+        {
+            "id": "att_001",
+            "firmName": "Morgan & Morgan",
+            "attorneyName": "John Morgan",
+            "caseVolumeTier": "High"
+        },
+        {
+            "id": "att_002",
+            "firmName": "The Fierce Advocates",
+            "attorneyName": "Jessica Pearson",
+            "caseVolumeTier": "Medium"
+        },
+        {
+            "id": "att_003",
+            "firmName": "Call Saul Legal",
+            "attorneyName": "Saul Goodman",
+            "caseVolumeTier": "Low"
+        },
+        {
+            "id": "att_004",
+            "firmName": "Hamlin & McGill",
+            "attorneyName": "Kim Wexler",
+            "caseVolumeTier": "High"
+        },
+        {
+            "id": "att_005",
+            "firmName": "Davis & Main",
+            "attorneyName": "Clifford Main",
+            "caseVolumeTier": "Medium"
+        },
+        {
+            "id": "att_006",
+            "firmName": "Schweikart & Cokely",
+            "attorneyName": "Rich Schweikart",
+            "caseVolumeTier": "High"
+        }
+    ],
+    "cases": [
+        {
+            "id": "case_1001",
+            "patientAlias": "P. Smith",
+            "ageBucket": "30-40",
+            "injuryType": "Whiplash",
+            "state": "CA",
+            "providerId": "prov_002",
+            "attorneyId": "att_001",
+            "lienAmount": 5500,
+            "billedAmount": 12000,
+            "predictedRecoveryPercent": 65,
+            "predictedRecoveryBaselinePercent": 60,
+            "predictedTimeToSettlementDays": 180,
+            "status": "Negotiation",
+            "riskTier": "Medium",
+            "intakeDate": "2025-06-15",
+            "lastUpdatedDate": "2025-12-01"
+        },
+        {
+            "id": "case_1002",
+            "patientAlias": "J. Doe",
+            "ageBucket": "40-50",
+            "injuryType": "Spinal Fracture",
+            "state": "NV",
+            "providerId": "prov_001",
+            "attorneyId": "att_004",
+            "lienAmount": 45000,
+            "billedAmount": 85000,
+            "predictedRecoveryPercent": 82,
+            "predictedRecoveryBaselinePercent": 75,
+            "predictedTimeToSettlementDays": 320,
+            "status": "Open",
+            "riskTier": "Low",
+            "intakeDate": "2025-08-10",
+            "lastUpdatedDate": "2025-11-20"
+        },
+        {
+            "id": "case_1003",
+            "patientAlias": "A. Johnson",
+            "ageBucket": "20-30",
+            "injuryType": "Soft Tissue",
+            "state": "TX",
+            "providerId": "prov_005",
+            "attorneyId": "att_003",
+            "lienAmount": 3200,
+            "billedAmount": 6500,
+            "predictedRecoveryPercent": 40,
+            "predictedRecoveryBaselinePercent": 55,
+            "predictedTimeToSettlementDays": 400,
+            "status": "Open",
+            "riskTier": "High",
+            "intakeDate": "2025-01-20",
+            "lastUpdatedDate": "2025-10-15"
+        },
+        {
+            "id": "case_1004",
+            "patientAlias": "M. Lee",
+            "ageBucket": "50-60",
+            "injuryType": "Concussion",
+            "state": "NY",
+            "providerId": "prov_006",
+            "attorneyId": "att_006",
+            "lienAmount": 15000,
+            "billedAmount": 28000,
+            "predictedRecoveryPercent": 70,
+            "predictedRecoveryBaselinePercent": 68,
+            "predictedTimeToSettlementDays": 210,
+            "status": "Negotiation",
+            "riskTier": "Medium",
+            "intakeDate": "2025-05-05",
+            "lastUpdatedDate": "2025-12-10"
+        },
+        {
+            "id": "case_1005",
+            "patientAlias": "K. Patel",
+            "ageBucket": "30-40",
+            "injuryType": "Back Injury",
+            "state": "FL",
+            "providerId": "prov_004",
+            "attorneyId": "att_002",
+            "lienAmount": 18000,
+            "billedAmount": 35000,
+            "predictedRecoveryPercent": 55,
+            "predictedRecoveryBaselinePercent": 62,
+            "predictedTimeToSettlementDays": 290,
+            "status": "Active",
+            "riskTier": "High",
+            "intakeDate": "2025-07-22",
+            "lastUpdatedDate": "2025-11-30"
+        },
+        {
+            "id": "case_1006",
+            "patientAlias": "L. Garcia",
+            "ageBucket": "40-50",
+            "injuryType": "Knee Surgery",
+            "state": "CA",
+            "providerId": "prov_001",
+            "attorneyId": "att_005",
+            "lienAmount": 62000,
+            "billedAmount": 110000,
+            "predictedRecoveryPercent": 88,
+            "predictedRecoveryBaselinePercent": 80,
+            "predictedTimeToSettlementDays": 150,
+            "status": "Settled",
+            "riskTier": "Low",
+            "intakeDate": "2025-02-14",
+            "lastUpdatedDate": "2025-12-15"
+        },
+        {
+            "id": "case_1007",
+            "patientAlias": "T. Nguyen",
+            "ageBucket": "20-30",
+            "injuryType": "Fractured Arm",
+            "state": "TX",
+            "providerId": "prov_003",
+            "attorneyId": "att_001",
+            "lienAmount": 8500,
+            "billedAmount": 16000,
+            "predictedRecoveryPercent": 72,
+            "predictedRecoveryBaselinePercent": 70,
+            "predictedTimeToSettlementDays": 190,
+            "status": "Paid",
+            "riskTier": "Low",
+            "intakeDate": "2025-03-10",
+            "lastUpdatedDate": "2025-11-01"
+        },
+        {
+            "id": "case_1008",
+            "patientAlias": "R. Wilson",
+            "ageBucket": "60+",
+            "injuryType": "Hip Replacement",
+            "state": "GA",
+            "providerId": "prov_001",
+            "attorneyId": "att_006",
+            "lienAmount": 75000,
+            "billedAmount": 140000,
+            "predictedRecoveryPercent": 60,
+            "predictedRecoveryBaselinePercent": 65,
+            "predictedTimeToSettlementDays": 365,
+            "status": "Negotiation",
+            "riskTier": "Medium",
+            "intakeDate": "2025-01-15",
+            "lastUpdatedDate": "2025-12-05"
+        },
+        {
+            "id": "case_1009",
+            "patientAlias": "S. Kim",
+            "ageBucket": "30-40",
+            "injuryType": "Neck pain",
+            "state": "NV",
+            "providerId": "prov_002",
+            "attorneyId": "att_004",
+            "lienAmount": 4200,
+            "billedAmount": 9000,
+            "predictedRecoveryPercent": 35,
+            "predictedRecoveryBaselinePercent": 50,
+            "predictedTimeToSettlementDays": 450,
+            "status": "Open",
+            "riskTier": "High",
+            "intakeDate": "2025-04-20",
+            "lastUpdatedDate": "2025-10-30"
+        },
+        {
+            "id": "case_1010",
+            "patientAlias": "B. Davis",
+            "ageBucket": "50-60",
+            "injuryType": "Shoulder Surgery",
+            "state": "FL",
+            "providerId": "prov_001",
+            "attorneyId": "att_002",
+            "lienAmount": 38000,
+            "billedAmount": 72000,
+            "predictedRecoveryPercent": 78,
+            "predictedRecoveryBaselinePercent": 75,
+            "predictedTimeToSettlementDays": 240,
+            "status": "Settled",
+            "riskTier": "Low",
+            "intakeDate": "2025-06-01",
+            "lastUpdatedDate": "2025-12-18"
+        }
+    ],
+    "events": [
+        {
+            "caseId": "case_1001",
+            "timestamp": "2025-06-15T09:00:00Z",
+            "type": "IntakeCompleted",
+            "description": "Patient file received from provider."
+        },
+        {
+            "caseId": "case_1001",
+            "timestamp": "2025-06-15T10:00:00Z",
+            "type": "ContractSigned",
+            "description": "Patient signed fee recovery agreement."
+        },
+        {
+            "caseId": "case_1001",
+            "timestamp": "2025-06-20T14:30:00Z",
+            "type": "RecordsRequested",
+            "description": "Attorney requested itemized billing."
+        },
+        {
+            "caseId": "case_1001",
+            "timestamp": "2025-07-15T10:00:00Z",
+            "type": "InvoiceIssued",
+            "description": "Initial invoice generated for treatment to date."
+        },
+        {
+            "caseId": "case_1001",
+            "timestamp": "2025-11-15T10:00:00Z",
+            "type": "FollowUpSent",
+            "description": "Follow-up on settlement status sent to firm."
+        },
+        {
+            "caseId": "case_1002",
+            "timestamp": "2025-08-10T11:20:00Z",
+            "type": "IntakeCompleted",
+            "description": "New major trauma case intake."
+        },
+        {
+            "caseId": "case_1002",
+            "timestamp": "2025-08-10T12:30:00Z",
+            "type": "ContractSigned",
+            "description": "Digital contract executed."
+        },
+        {
+            "caseId": "case_1002",
+            "timestamp": "2025-09-05T16:45:00Z",
+            "type": "TreatmentDocumented",
+            "description": "Surgery report added to case file."
+        },
+        {
+            "caseId": "case_1002",
+            "timestamp": "2025-10-01T09:00:00Z",
+            "type": "InvoiceIssued",
+            "description": "Invoice #1002-A issued for $85,000."
+        },
+        {
+            "caseId": "case_1002",
+            "timestamp": "2025-11-20T14:00:00Z",
+            "type": "RecordsRequested",
+            "description": "Full medical chart requested by defense."
+        },
+        {
+            "caseId": "case_1003",
+            "timestamp": "2025-01-20T08:15:00Z",
+            "type": "IntakeCompleted",
+            "description": "Soft tissue injury case opened."
+        },
+        {
+            "caseId": "case_1003",
+            "timestamp": "2025-01-20T09:30:00Z",
+            "type": "ContractSigned",
+            "description": "Fee agreement signed on tablet."
+        },
+        {
+            "caseId": "case_1003",
+            "timestamp": "2025-03-10T13:00:00Z",
+            "type": "TreatmentDocumented",
+            "description": "PT notes uploaded (12 sessions)."
+        },
+        {
+            "caseId": "case_1003",
+            "timestamp": "2025-04-15T10:00:00Z",
+            "type": "InvoiceIssued",
+            "description": "Invoice sent to attorney."
+        },
+        {
+            "caseId": "case_1003",
+            "timestamp": "2025-10-15T09:30:00Z",
+            "type": "Alert",
+            "description": "No activity for 4 months. Risk Flag."
+        },
+        {
+            "caseId": "case_1004",
+            "timestamp": "2025-05-05T09:00:00Z",
+            "type": "IntakeCompleted",
+            "description": "Concussion protocol case started."
+        },
+        {
+            "caseId": "case_1004",
+            "timestamp": "2025-05-05T10:15:00Z",
+            "type": "ContractSigned",
+            "description": "Patient signed representation agreement."
+        },
+        {
+            "caseId": "case_1004",
+            "timestamp": "2025-06-20T11:00:00Z",
+            "type": "TreatmentDocumented",
+            "description": "Neuro consult notes added."
+        },
+        {
+            "caseId": "case_1004",
+            "timestamp": "2025-07-01T14:00:00Z",
+            "type": "InvoiceIssued",
+            "description": "Billing statement generated."
+        },
+        {
+            "caseId": "case_1004",
+            "timestamp": "2025-09-15T16:00:00Z",
+            "type": "FollowUpSent",
+            "description": "Status check with paralegal."
+        },
+        {
+            "caseId": "case_1005",
+            "timestamp": "2025-07-22T13:00:00Z",
+            "type": "IntakeCompleted",
+            "description": "Back injury referral processed."
+        },
+        {
+            "caseId": "case_1005",
+            "timestamp": "2025-07-22T14:00:00Z",
+            "type": "ContractSigned",
+            "description": "Electronic signature captured."
+        },
+        {
+            "caseId": "case_1005",
+            "timestamp": "2025-08-30T10:00:00Z",
+            "type": "RecordsRequested",
+            "description": "MRI films requested."
+        },
+        {
+            "caseId": "case_1005",
+            "timestamp": "2025-09-15T11:00:00Z",
+            "type": "InvoiceIssued",
+            "description": "Interim invoice created."
+        },
+        {
+            "caseId": "case_1005",
+            "timestamp": "2025-11-30T09:00:00Z",
+            "type": "Alert",
+            "description": "Attorney unresponsive to 2nd request."
+        },
+        {
+            "caseId": "case_1006",
+            "timestamp": "2025-02-14T10:00:00Z",
+            "type": "IntakeCompleted",
+            "description": "Surgical case intake."
+        },
+        {
+            "caseId": "case_1006",
+            "timestamp": "2025-02-14T11:00:00Z",
+            "type": "ContractSigned",
+            "description": "Lien agreement executed."
+        },
+        {
+            "caseId": "case_1006",
+            "timestamp": "2025-03-20T15:00:00Z",
+            "type": "TreatmentDocumented",
+            "description": "Op report uploaded."
+        },
+        {
+            "caseId": "case_1006",
+            "timestamp": "2025-04-10T10:00:00Z",
+            "type": "InvoiceIssued",
+            "description": "Final bill generated."
+        },
+        {
+            "caseId": "case_1006",
+            "timestamp": "2025-11-20T15:00:00Z",
+            "type": "SettlementReached",
+            "description": "Case settled at 95% of policy limits."
+        },
+        {
+            "caseId": "case_1006",
+            "timestamp": "2025-12-15T11:45:00Z",
+            "type": "PaymentReceived",
+            "description": "Provider lien paid in full."
+        },
+        {
+            "caseId": "case_1007",
+            "timestamp": "2025-03-10T09:00:00Z",
+            "type": "IntakeCompleted",
+            "description": "Fracture care intake."
+        },
+        {
+            "caseId": "case_1007",
+            "timestamp": "2025-03-10T10:00:00Z",
+            "type": "ContractSigned",
+            "description": "Signed forms received."
+        },
+        {
+            "caseId": "case_1007",
+            "timestamp": "2025-04-05T14:00:00Z",
+            "type": "TreatmentDocumented",
+            "description": "X-rays and cast notes filed."
+        },
+        {
+            "caseId": "case_1007",
+            "timestamp": "2025-05-01T11:00:00Z",
+            "type": "InvoiceIssued",
+            "description": "Invoice sent."
+        },
+        {
+            "caseId": "case_1007",
+            "timestamp": "2025-10-20T16:00:00Z",
+            "type": "SettlementReached",
+            "description": "Settlement confirmed."
+        },
+        {
+            "caseId": "case_1007",
+            "timestamp": "2025-11-01T10:00:00Z",
+            "type": "PaymentReceived",
+            "description": "Check received and deposited."
+        },
+        {
+            "caseId": "case_1008",
+            "timestamp": "2025-01-15T14:20:00Z",
+            "type": "IntakeCompleted",
+            "description": "Complex hip replacement case."
+        },
+        {
+            "caseId": "case_1008",
+            "timestamp": "2025-01-15T16:00:00Z",
+            "type": "ContractSigned",
+            "description": "Fee agreement and power of attorney signed."
+        },
+        {
+            "caseId": "case_1008",
+            "timestamp": "2025-03-10T10:00:00Z",
+            "type": "TreatmentDocumented",
+            "description": "Rehab notes updated."
+        },
+        {
+            "caseId": "case_1008",
+            "timestamp": "2025-06-01T09:00:00Z",
+            "type": "InvoiceIssued",
+            "description": "Large bill sent for review."
+        },
+        {
+            "caseId": "case_1008",
+            "timestamp": "2025-12-05T10:00:00Z",
+            "type": "Negotiation",
+            "description": "Attorney claiming limits issue. Evaluating policy."
+        },
+        {
+            "caseId": "case_1009",
+            "timestamp": "2025-04-20T10:00:00Z",
+            "type": "IntakeCompleted",
+            "description": "Neck pain evaluation."
+        },
+        {
+            "caseId": "case_1009",
+            "timestamp": "2025-04-20T11:30:00Z",
+            "type": "ContractSigned",
+            "description": "Standard intake forms signed."
+        },
+        {
+            "caseId": "case_1009",
+            "timestamp": "2025-05-15T14:00:00Z",
+            "type": "TreatmentDocumented",
+            "description": "Chiro adjustment log."
+        },
+        {
+            "caseId": "case_1009",
+            "timestamp": "2025-06-20T10:00:00Z",
+            "type": "InvoiceIssued",
+            "description": "Quarterly invoice."
+        },
+        {
+            "caseId": "case_1009",
+            "timestamp": "2025-09-10T15:00:00Z",
+            "type": "FollowUpSent",
+            "description": "Checking on case status."
+        },
+        {
+            "caseId": "case_1010",
+            "timestamp": "2025-06-01T08:00:00Z",
+            "type": "IntakeCompleted",
+            "description": "Shoulder surgery case."
+        },
+        {
+            "caseId": "case_1010",
+            "timestamp": "2025-06-01T09:15:00Z",
+            "type": "ContractSigned",
+            "description": "Lien executed."
+        },
+        {
+            "caseId": "case_1010",
+            "timestamp": "2025-07-20T11:00:00Z",
+            "type": "RecordsRequested",
+            "description": "Post-op notes requested."
+        },
+        {
+            "caseId": "case_1010",
+            "timestamp": "2025-08-15T13:00:00Z",
+            "type": "InvoiceIssued",
+            "description": "Surgical center bill sent."
+        },
+        {
+            "caseId": "case_1010",
+            "timestamp": "2025-12-18T10:00:00Z",
+            "type": "SettlementReached",
+            "description": "Full recovery obtained."
+        }
+    ]
+}
