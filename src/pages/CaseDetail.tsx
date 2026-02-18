@@ -8,6 +8,7 @@ import {
 import { useDataStore } from '../hooks/useDataStore';
 import StatusBadge from '../components/ui/StatusBadge';
 import RiskBadge from '../components/ui/RiskBadge';
+import ContractTypeBadge from '../components/ui/ContractTypeBadge';
 import { generateRuleBasedInsights } from '../lib/insights';
 import clsx from 'clsx';
 import type { WorkflowEventType, AIInsight } from '../types';
@@ -114,9 +115,15 @@ const CaseDetail: React.FC = () => {
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                 <div className="flex flex-col md:flex-row justify-between items-start gap-6">
                     <div>
-                        <div className="flex items-center gap-3 mb-2">
-                            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">{caseItem.patientAlias}</h1>
+                        <div className="flex items-center gap-3 mb-2 flex-wrap">
+                            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">{caseItem.patientAlias}</h1>
                             <span className="bg-slate-100 text-slate-500 px-2 py-1 rounded text-xs font-mono">#{caseItem.id}</span>
+                            <ContractTypeBadge type={caseItem.contractType} />
+                            {caseItem.contractType === 'No Contract' && (
+                                <span className="text-[10px] font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">
+                                    No fee agreement on file
+                                </span>
+                            )}
                         </div>
                         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500 mt-2">
                             <span className="flex items-center gap-1.5"><User size={16} className="text-blue-500" /> {provider?.name}</span>

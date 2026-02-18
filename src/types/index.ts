@@ -15,6 +15,8 @@ export interface Attorney {
 
 export type CaseStatus = 'Open' | 'Negotiation' | 'Settled' | 'Paid' | 'Active';
 export type RiskTier = 'Low' | 'Medium' | 'High';
+export type ContractType = 'MedPayRez' | 'Legacy LOP' | 'No Contract';
+export type ContractStatus = 'Executed' | 'Pending Signature' | 'None';
 
 export interface Case {
   id: string;
@@ -33,6 +35,15 @@ export interface Case {
   riskTier: RiskTier;
   intakeDate: string;
   lastUpdatedDate: string;
+
+  // PI Recovery Command Center extensions (all optional for backward compat)
+  contractType?: ContractType;
+  contractStatus?: ContractStatus;
+  attorneyName?: string;
+  lawFirm?: string;
+  attorneyAcknowledged?: boolean;
+  recoveryRisk?: 'Low' | 'Medium' | 'High';
+  ageBucketDays?: number;
 }
 
 export type WorkflowEventType =
@@ -44,10 +55,12 @@ export type WorkflowEventType =
   | 'FollowUpSent'
   | 'SettlementReached'
   | 'PaymentReceived'
-  | 'Negotiation' // Keeping legacy for compatibility if needed, or mapping it out
+  | 'Negotiation'
   | 'Alert'
   | 'DemandSent'
-  | 'Intake'; // Legacy
+  | 'Intake'
+  | 'NoticeGenerated'
+  | 'FollowUpScheduled';
 
 export interface CaseEvent {
   caseId: string;

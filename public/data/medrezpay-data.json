@@ -46,37 +46,37 @@
     "attorneys": [
         {
             "id": "att_001",
-            "firmName": "Morgan & Morgan",
-            "attorneyName": "John Morgan",
+            "firmName": "Smith & Reyes Injury Law",
+            "attorneyName": "Carlos Reyes",
             "caseVolumeTier": "High"
         },
         {
             "id": "att_002",
-            "firmName": "The Fierce Advocates",
-            "attorneyName": "Jessica Pearson",
+            "firmName": "Reyes Injury Group",
+            "attorneyName": "Maria Reyes",
             "caseVolumeTier": "Medium"
         },
         {
             "id": "att_003",
-            "firmName": "Call Saul Legal",
-            "attorneyName": "Saul Goodman",
+            "firmName": "Coastal PI Partners",
+            "attorneyName": "James Nguyen",
             "caseVolumeTier": "Low"
         },
         {
             "id": "att_004",
-            "firmName": "Hamlin & McGill",
+            "firmName": "Hamlin & McGill Injury",
             "attorneyName": "Kim Wexler",
             "caseVolumeTier": "High"
         },
         {
             "id": "att_005",
-            "firmName": "Davis & Main",
+            "firmName": "Davis & Main PI Law",
             "attorneyName": "Clifford Main",
             "caseVolumeTier": "Medium"
         },
         {
             "id": "att_006",
-            "firmName": "Schweikart & Cokely",
+            "firmName": "Schweikart Injury Group",
             "attorneyName": "Rich Schweikart",
             "caseVolumeTier": "High"
         }
@@ -98,7 +98,14 @@
             "status": "Negotiation",
             "riskTier": "Medium",
             "intakeDate": "2025-06-15",
-            "lastUpdatedDate": "2025-12-01"
+            "lastUpdatedDate": "2025-12-01",
+            "contractType": "MedPayRez",
+            "contractStatus": "Executed",
+            "attorneyName": "Carlos Reyes",
+            "lawFirm": "Smith & Reyes Injury Law",
+            "attorneyAcknowledged": true,
+            "recoveryRisk": "Medium",
+            "ageBucketDays": 248
         },
         {
             "id": "case_1002",
@@ -116,7 +123,14 @@
             "status": "Open",
             "riskTier": "Low",
             "intakeDate": "2025-08-10",
-            "lastUpdatedDate": "2025-11-20"
+            "lastUpdatedDate": "2025-11-20",
+            "contractType": "MedPayRez",
+            "contractStatus": "Executed",
+            "attorneyName": "Kim Wexler",
+            "lawFirm": "Hamlin & McGill Injury",
+            "attorneyAcknowledged": true,
+            "recoveryRisk": "Low",
+            "ageBucketDays": 192
         },
         {
             "id": "case_1003",
@@ -134,7 +148,14 @@
             "status": "Open",
             "riskTier": "High",
             "intakeDate": "2025-01-20",
-            "lastUpdatedDate": "2025-10-15"
+            "lastUpdatedDate": "2025-10-15",
+            "contractType": "Legacy LOP",
+            "contractStatus": "Executed",
+            "attorneyName": "James Nguyen",
+            "lawFirm": "Coastal PI Partners",
+            "attorneyAcknowledged": false,
+            "recoveryRisk": "High",
+            "ageBucketDays": 394
         },
         {
             "id": "case_1004",
@@ -152,7 +173,14 @@
             "status": "Negotiation",
             "riskTier": "Medium",
             "intakeDate": "2025-05-05",
-            "lastUpdatedDate": "2025-12-10"
+            "lastUpdatedDate": "2025-12-10",
+            "contractType": "MedPayRez",
+            "contractStatus": "Executed",
+            "attorneyName": "Rich Schweikart",
+            "lawFirm": "Schweikart Injury Group",
+            "attorneyAcknowledged": true,
+            "recoveryRisk": "Medium",
+            "ageBucketDays": 289
         },
         {
             "id": "case_1005",
@@ -170,7 +198,14 @@
             "status": "Active",
             "riskTier": "High",
             "intakeDate": "2025-07-22",
-            "lastUpdatedDate": "2025-11-30"
+            "lastUpdatedDate": "2025-11-30",
+            "contractType": "No Contract",
+            "contractStatus": "None",
+            "attorneyName": "Maria Reyes",
+            "lawFirm": "Reyes Injury Group",
+            "attorneyAcknowledged": false,
+            "recoveryRisk": "High",
+            "ageBucketDays": 211
         },
         {
             "id": "case_1006",
@@ -188,7 +223,14 @@
             "status": "Settled",
             "riskTier": "Low",
             "intakeDate": "2025-02-14",
-            "lastUpdatedDate": "2025-12-15"
+            "lastUpdatedDate": "2025-12-15",
+            "contractType": "MedPayRez",
+            "contractStatus": "Executed",
+            "attorneyName": "Clifford Main",
+            "lawFirm": "Davis & Main PI Law",
+            "attorneyAcknowledged": true,
+            "recoveryRisk": "Low",
+            "ageBucketDays": 338
         },
         {
             "id": "case_1007",
@@ -206,7 +248,14 @@
             "status": "Paid",
             "riskTier": "Low",
             "intakeDate": "2025-03-10",
-            "lastUpdatedDate": "2025-11-01"
+            "lastUpdatedDate": "2025-11-01",
+            "contractType": "MedPayRez",
+            "contractStatus": "Executed",
+            "attorneyName": "Carlos Reyes",
+            "lawFirm": "Smith & Reyes Injury Law",
+            "attorneyAcknowledged": true,
+            "recoveryRisk": "Low",
+            "ageBucketDays": 336
         },
         {
             "id": "case_1008",
@@ -224,7 +273,14 @@
             "status": "Negotiation",
             "riskTier": "Medium",
             "intakeDate": "2025-01-15",
-            "lastUpdatedDate": "2025-12-05"
+            "lastUpdatedDate": "2025-12-05",
+            "contractType": "MedPayRez",
+            "contractStatus": "Executed",
+            "attorneyName": "Rich Schweikart",
+            "lawFirm": "Schweikart Injury Group",
+            "attorneyAcknowledged": false,
+            "recoveryRisk": "Medium",
+            "ageBucketDays": 399
         },
         {
             "id": "case_1009",
@@ -242,7 +298,14 @@
             "status": "Open",
             "riskTier": "High",
             "intakeDate": "2025-04-20",
-            "lastUpdatedDate": "2025-10-30"
+            "lastUpdatedDate": "2025-10-30",
+            "contractType": "Legacy LOP",
+            "contractStatus": "Pending Signature",
+            "attorneyName": "Kim Wexler",
+            "lawFirm": "Hamlin & McGill Injury",
+            "attorneyAcknowledged": false,
+            "recoveryRisk": "High",
+            "ageBucketDays": 304
         },
         {
             "id": "case_1010",
@@ -260,7 +323,14 @@
             "status": "Settled",
             "riskTier": "Low",
             "intakeDate": "2025-06-01",
-            "lastUpdatedDate": "2025-12-18"
+            "lastUpdatedDate": "2025-12-18",
+            "contractType": "MedPayRez",
+            "contractStatus": "Executed",
+            "attorneyName": "Maria Reyes",
+            "lawFirm": "Reyes Injury Group",
+            "attorneyAcknowledged": true,
+            "recoveryRisk": "Low",
+            "ageBucketDays": 261
         }
     ],
     "events": [
@@ -274,7 +344,7 @@
             "caseId": "case_1001",
             "timestamp": "2025-06-15T10:00:00Z",
             "type": "ContractSigned",
-            "description": "Patient signed fee recovery agreement."
+            "description": "Patient signed MedPayRez fee recovery agreement."
         },
         {
             "caseId": "case_1001",
@@ -292,7 +362,7 @@
             "caseId": "case_1001",
             "timestamp": "2025-11-15T10:00:00Z",
             "type": "FollowUpSent",
-            "description": "Follow-up on settlement status sent to firm."
+            "description": "Follow-up on settlement status sent to Smith & Reyes Injury Law."
         },
         {
             "caseId": "case_1002",
@@ -304,7 +374,7 @@
             "caseId": "case_1002",
             "timestamp": "2025-08-10T12:30:00Z",
             "type": "ContractSigned",
-            "description": "Digital contract executed."
+            "description": "MedPayRez digital contract executed."
         },
         {
             "caseId": "case_1002",
@@ -334,7 +404,7 @@
             "caseId": "case_1003",
             "timestamp": "2025-01-20T09:30:00Z",
             "type": "ContractSigned",
-            "description": "Fee agreement signed on tablet."
+            "description": "Legacy LOP agreement signed."
         },
         {
             "caseId": "case_1003",
@@ -346,13 +416,13 @@
             "caseId": "case_1003",
             "timestamp": "2025-04-15T10:00:00Z",
             "type": "InvoiceIssued",
-            "description": "Invoice sent to attorney."
+            "description": "Invoice sent to Coastal PI Partners."
         },
         {
             "caseId": "case_1003",
             "timestamp": "2025-10-15T09:30:00Z",
             "type": "Alert",
-            "description": "No activity for 4 months. Risk Flag."
+            "description": "No activity for 4 months. Recovery risk elevated. Attorney acknowledgment pending."
         },
         {
             "caseId": "case_1004",
@@ -364,7 +434,7 @@
             "caseId": "case_1004",
             "timestamp": "2025-05-05T10:15:00Z",
             "type": "ContractSigned",
-            "description": "Patient signed representation agreement."
+            "description": "Patient signed MedPayRez representation agreement."
         },
         {
             "caseId": "case_1004",
@@ -382,19 +452,19 @@
             "caseId": "case_1004",
             "timestamp": "2025-09-15T16:00:00Z",
             "type": "FollowUpSent",
-            "description": "Status check with paralegal."
+            "description": "Status check with Schweikart Injury Group paralegal."
         },
         {
             "caseId": "case_1005",
             "timestamp": "2025-07-22T13:00:00Z",
             "type": "IntakeCompleted",
-            "description": "Back injury referral processed."
+            "description": "Back injury referral processed — no contract on file."
         },
         {
             "caseId": "case_1005",
             "timestamp": "2025-07-22T14:00:00Z",
-            "type": "ContractSigned",
-            "description": "Electronic signature captured."
+            "type": "Alert",
+            "description": "Case opened without MedPayRez contract. Recovery risk: High."
         },
         {
             "caseId": "case_1005",
@@ -412,7 +482,7 @@
             "caseId": "case_1005",
             "timestamp": "2025-11-30T09:00:00Z",
             "type": "Alert",
-            "description": "Attorney unresponsive to 2nd request."
+            "description": "Reyes Injury Group unresponsive to 2nd request. Attorney acknowledgment missing."
         },
         {
             "caseId": "case_1006",
@@ -424,7 +494,7 @@
             "caseId": "case_1006",
             "timestamp": "2025-02-14T11:00:00Z",
             "type": "ContractSigned",
-            "description": "Lien agreement executed."
+            "description": "MedPayRez lien agreement executed."
         },
         {
             "caseId": "case_1006",
@@ -442,13 +512,13 @@
             "caseId": "case_1006",
             "timestamp": "2025-11-20T15:00:00Z",
             "type": "SettlementReached",
-            "description": "Case settled at 95% of policy limits."
+            "description": "Case settled at 95% of policy limits via contract-backed workflow."
         },
         {
             "caseId": "case_1006",
             "timestamp": "2025-12-15T11:45:00Z",
             "type": "PaymentReceived",
-            "description": "Provider lien paid in full."
+            "description": "Provider lien paid in full. Documented fee assignment honored."
         },
         {
             "caseId": "case_1007",
@@ -460,7 +530,7 @@
             "caseId": "case_1007",
             "timestamp": "2025-03-10T10:00:00Z",
             "type": "ContractSigned",
-            "description": "Signed forms received."
+            "description": "MedPayRez signed forms received."
         },
         {
             "caseId": "case_1007",
@@ -472,13 +542,13 @@
             "caseId": "case_1007",
             "timestamp": "2025-05-01T11:00:00Z",
             "type": "InvoiceIssued",
-            "description": "Invoice sent."
+            "description": "Invoice sent to Smith & Reyes Injury Law."
         },
         {
             "caseId": "case_1007",
             "timestamp": "2025-10-20T16:00:00Z",
             "type": "SettlementReached",
-            "description": "Settlement confirmed."
+            "description": "Settlement confirmed via documented fee assignment."
         },
         {
             "caseId": "case_1007",
@@ -496,7 +566,7 @@
             "caseId": "case_1008",
             "timestamp": "2025-01-15T16:00:00Z",
             "type": "ContractSigned",
-            "description": "Fee agreement and power of attorney signed."
+            "description": "MedPayRez fee agreement and power of attorney signed."
         },
         {
             "caseId": "case_1008",
@@ -508,13 +578,13 @@
             "caseId": "case_1008",
             "timestamp": "2025-06-01T09:00:00Z",
             "type": "InvoiceIssued",
-            "description": "Large bill sent for review."
+            "description": "Large bill sent for review to Schweikart Injury Group."
         },
         {
             "caseId": "case_1008",
             "timestamp": "2025-12-05T10:00:00Z",
             "type": "Negotiation",
-            "description": "Attorney claiming limits issue. Evaluating policy."
+            "description": "Attorney claiming limits issue. Evaluating policy. Attorney acknowledgment not yet received."
         },
         {
             "caseId": "case_1009",
@@ -526,7 +596,7 @@
             "caseId": "case_1009",
             "timestamp": "2025-04-20T11:30:00Z",
             "type": "ContractSigned",
-            "description": "Standard intake forms signed."
+            "description": "Legacy LOP standard intake forms signed — pending attorney acknowledgment."
         },
         {
             "caseId": "case_1009",
@@ -544,7 +614,7 @@
             "caseId": "case_1009",
             "timestamp": "2025-09-10T15:00:00Z",
             "type": "FollowUpSent",
-            "description": "Checking on case status."
+            "description": "Checking on case status with Hamlin & McGill Injury."
         },
         {
             "caseId": "case_1010",
@@ -556,7 +626,7 @@
             "caseId": "case_1010",
             "timestamp": "2025-06-01T09:15:00Z",
             "type": "ContractSigned",
-            "description": "Lien executed."
+            "description": "MedPayRez lien executed."
         },
         {
             "caseId": "case_1010",
@@ -568,13 +638,13 @@
             "caseId": "case_1010",
             "timestamp": "2025-08-15T13:00:00Z",
             "type": "InvoiceIssued",
-            "description": "Surgical center bill sent."
+            "description": "Surgical center bill sent to Reyes Injury Group."
         },
         {
             "caseId": "case_1010",
             "timestamp": "2025-12-18T10:00:00Z",
             "type": "SettlementReached",
-            "description": "Full recovery obtained."
+            "description": "Full recovery obtained via contract-backed workflow."
         }
     ]
 }
