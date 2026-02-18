@@ -162,7 +162,7 @@ const Intake: React.FC = () => {
                     New Case Intake
                 </h1>
                 <p className="text-slate-500 mt-2">
-                    Contract-backed fee recovery workflow. Patient data is de-identified.
+                    Intake (Kiosk / Mobile / Office Portal) — Contract-Backed Enrollment. Patient data is de-identified.
                 </p>
             </div>
 

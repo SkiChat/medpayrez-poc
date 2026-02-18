@@ -12,6 +12,7 @@ import ContractTypeBadge from '../components/ui/ContractTypeBadge';
 import { generateRuleBasedInsights } from '../lib/insights';
 import clsx from 'clsx';
 import type { WorkflowEventType, AIInsight } from '../types';
+import InvoiceSummaryCard from '../components/ui/InvoiceSummaryCard';
 
 const CaseDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -131,6 +132,17 @@ const CaseDetail: React.FC = () => {
                             <span className="flex items-center gap-1.5"><FileText size={16} className="text-slate-400" /> {caseItem.injuryType}</span>
                             <span className="flex items-center gap-1.5 px-2 py-0.5 bg-slate-50 rounded border border-slate-100">{caseItem.state}</span>
                         </div>
+                        {/* Case management attribution */}
+                        <div className="flex flex-wrap items-center gap-x-5 gap-y-1 mt-3 text-xs text-slate-400">
+                            <span>
+                                <span className="font-semibold text-slate-500">Managed by:</span>{' '}
+                                {caseItem.assignedTo ?? 'MedPayRez Case Team'}
+                            </span>
+                            <span>
+                                <span className="font-semibold text-slate-500">Mode:</span>{' '}
+                                {caseItem.managementMode ?? 'Staff (AI-assisted drafting available)'}
+                            </span>
+                        </div>
                     </div>
                     <div className="flex items-center gap-3">
                         <div className="text-right mr-4">
@@ -220,11 +232,20 @@ const CaseDetail: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* C. Workflow Timeline */}
+                    {/* C. Invoice Summary Card (above timeline) */}
+                    <InvoiceSummaryCard
+                        caseId={caseItem.id}
+                        billedAmount={caseItem.billedAmount}
+                        lienAmount={caseItem.lienAmount}
+                        events={events}
+                        onAddEvent={handleAddEvent}
+                    />
+
+                    {/* C. Documentation Trail */}
                     <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                         <div className="flex justify-between items-center mb-6">
                             <h3 className="font-bold text-slate-900 flex items-center gap-2">
-                                <Calendar size={18} className="text-blue-600" /> Workflow Timeline
+                                <Calendar size={18} className="text-blue-600" /> Documentation Trail (Timestamped)
                             </h3>
                             <span className="text-xs text-slate-400 flex items-center gap-1">
                                 <Clock size={12} /> All actions timestamped
@@ -395,7 +416,7 @@ const CaseDetail: React.FC = () => {
 
                     <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
                         <p className="text-xs text-blue-800 text-center">
-                            Patients are never personally billed. Recovery is pursued through contract-backed rights.
+                            Patients are never personally billed. Recovery is pursued through documented fee assignment workflow.
                         </p>
                     </div>
 

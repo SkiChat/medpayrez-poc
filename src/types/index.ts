@@ -44,6 +44,9 @@ export interface Case {
   attorneyAcknowledged?: boolean;
   recoveryRisk?: 'Low' | 'Medium' | 'High';
   ageBucketDays?: number;
+  // Case management attribution (optional, no migration required)
+  assignedTo?: string;
+  managementMode?: 'Staff' | 'AI-assisted';
 }
 
 export type WorkflowEventType =

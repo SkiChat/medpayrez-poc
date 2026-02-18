@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle2, FolderKanban, ExternalLink, ShieldCheck } from 'lucide-react';
+import { CheckCircle2, FolderKanban, ExternalLink, ShieldCheck, Clock } from 'lucide-react';
 import type { ContractType } from '../types';
 
 interface IntakeSuccessProps {
@@ -20,6 +20,10 @@ const IntakeSuccess: React.FC<IntakeSuccessProps> = ({
 }) => {
     const navigate = useNavigate();
 
+    const recordTimestamp = new Date().toLocaleString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', timeZoneName: 'short',
+    });
     const contractStatus = contractType === 'No Contract' ? 'Pending Signature' : 'Executed';
     const contractColor =
         contractType === 'MedPayRez'
@@ -62,6 +66,12 @@ const IntakeSuccess: React.FC<IntakeSuccessProps> = ({
                 <div className="flex items-center justify-between px-5 py-4">
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Attorney Notified</span>
                     <span className="text-sm font-semibold text-slate-800 text-right max-w-[200px] truncate">{lawFirm}</span>
+                </div>
+                <div className="flex items-center justify-between px-5 py-4">
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <Clock size={11} /> Record Timestamp
+                    </span>
+                    <span className="text-xs font-mono text-slate-600 text-right">{recordTimestamp}</span>
                 </div>
                 <div className="px-5 py-4 bg-blue-50">
                     <div className="flex items-start gap-2">
