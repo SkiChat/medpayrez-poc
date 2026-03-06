@@ -31,10 +31,10 @@ const Layout: React.FC = () => {
             {/* Logo */}
             <div className="h-16 md:h-20 flex items-center px-4 md:px-6 border-b border-slate-100 flex-shrink-0">
                 <div className="flex items-center gap-2.5 min-w-0">
-                    <img src="/favicon.png" alt="MedPayRez" className="w-8 h-8 rounded-sm flex-shrink-0" />
+                    <img src="/favicon.png" alt="STATMedPay" className="w-8 h-8 rounded-sm flex-shrink-0" />
                     <div className="min-w-0 leading-tight">
-                        <span className="block font-bold text-sm tracking-tight text-slate-900">MedPayRez</span>
-                        <span className="block font-semibold text-xs text-blue-500 tracking-wide">Provider</span>
+                        <span className="block font-bold text-sm tracking-tight text-slate-900">STATMedPay</span>
+                        <span className="block font-semibold text-xs text-blue-500 tracking-wide"> Provider</span>
                     </div>
                 </div>
             </div>
@@ -128,9 +128,9 @@ const Layout: React.FC = () => {
                         <Menu size={22} />
                     </button>
                     <div className="flex items-center gap-2">
-                        <img src="/favicon.png" alt="MedPayRez" className="w-6 h-6 rounded-sm" />
+                        <img src="/favicon.png" alt="STATMedPay" className="w-6 h-6 rounded-sm" />
                         <span className="font-bold text-sm tracking-tight text-slate-900">
-                            MedPayRez<span className="text-blue-500">Provider</span>
+                            STATMedPay<span className="text-blue-500"> Provider</span>
                         </span>
                     </div>
                     {/* Spacer to center logo */}

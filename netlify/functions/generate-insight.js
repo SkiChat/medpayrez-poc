@@ -84,7 +84,7 @@ Be concise, operational, and professional.
                 "Content-Type": "application/json",
                 // OpenRouter specific headers for app identification
                 "HTTP-Referer": "https://medpayrez-provider.netlify.app",
-                "X-Title": "MedPayRez Provider"
+                "X-Title": "STATMedPay Provider"
             },
             body: JSON.stringify({
                 model: "meta-llama/llama-2-13b-chat",

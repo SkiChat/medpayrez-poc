@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle2, FolderKanban, ExternalLink, ShieldCheck, Clock } from 'lucide-react';
 import type { ContractType } from '../types';
+import { mapContractLabel } from '../lib/displayUtils';
 
 interface IntakeSuccessProps {
     caseId: string;
@@ -58,9 +59,9 @@ const IntakeSuccess: React.FC<IntakeSuccessProps> = ({
                     <span className="text-sm font-semibold text-slate-800">{patientAlias}</span>
                 </div>
                 <div className="flex items-center justify-between px-5 py-4">
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Contract</span>
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Assignment Method</span>
                     <span className={`text-xs font-bold px-2 py-1 rounded border ${contractColor}`}>
-                        {contractType} — {contractStatus}
+                        {mapContractLabel(contractType)} — {contractStatus}
                     </span>
                 </div>
                 <div className="flex items-center justify-between px-5 py-4">
@@ -77,7 +78,7 @@ const IntakeSuccess: React.FC<IntakeSuccessProps> = ({
                     <div className="flex items-start gap-2">
                         <ShieldCheck size={14} className="text-blue-600 mt-0.5 flex-shrink-0" />
                         <p className="text-xs text-blue-800 leading-relaxed">
-                            Patients are never personally billed. Recovery is pursued through contract-backed rights and documented fee assignments.
+                            Patients are never personally billed. Recovery is pursued through documented fee assignments tied to settlement proceeds.
                         </p>
                     </div>
                 </div>

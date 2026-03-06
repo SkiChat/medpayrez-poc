@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ContractType } from '../../types';
+import { mapContractLabel } from '../../lib/displayUtils';
 
 interface ContractTypeBadgeProps {
     type?: ContractType;
@@ -21,7 +22,7 @@ const ContractTypeBadge: React.FC<ContractTypeBadgeProps> = ({ type = 'No Contra
     return (
         <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold ${styles[type]}`}>
             <span className={`w-1.5 h-1.5 rounded-full ${dots[type]}`}></span>
-            {type}
+            {mapContractLabel(type)}
         </span>
     );
 };

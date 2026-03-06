@@ -63,7 +63,10 @@ export type WorkflowEventType =
   | 'DemandSent'
   | 'Intake'
   | 'NoticeGenerated'
-  | 'FollowUpScheduled';
+  | 'FollowUpScheduled'
+  | 'AssignmentSigned'
+  | 'AttorneyNoticeSent'
+  | 'AttorneyAcknowledged';
 
 export interface CaseEvent {
   caseId: string;

@@ -10,7 +10,7 @@ const INJURY_TYPES = ['Soft Tissue', 'Fracture', 'Surgical', 'Chronic Pain', 'Wh
 const CONTRACT_OPTIONS: { value: ContractType; label: string; description: string; recommended?: boolean; warning?: boolean }[] = [
     {
         value: 'MedPayRez',
-        label: 'MedPayRez Enforceable Fee Contract',
+        label: 'STAT Med Pay Assignment (recommended)',
         description: 'Documented fee assignment with attorney notification. Strongest recovery position.',
         recommended: true,
     },
@@ -21,8 +21,8 @@ const CONTRACT_OPTIONS: { value: ContractType; label: string; description: strin
     },
     {
         value: 'No Contract',
-        label: 'No Contract (Discouraged)',
-        description: 'No documented fee rights. Recovery risk is elevated. Operational guidance: execute a contract.',
+        label: 'No Assignment / No Contract (discouraged)',
+        description: 'No documented fee rights. Recovery risk is elevated. Operational guidance: execute fee assignment.',
         warning: true,
     },
 ];
@@ -110,8 +110,15 @@ const Intake: React.FC = () => {
         addEvent({
             caseId: newCaseId,
             timestamp: signedTime.toISOString(),
-            type: 'ContractSigned',
-            description: `${contractType} fee recovery agreement signed. Attorney notification pending.`,
+            type: 'AssignmentSigned',
+            description: `${contractType} fee assignment agreement signed. Patients are never personally billed.`,
+        });
+
+        addEvent({
+            caseId: newCaseId,
+            timestamp: new Date(now.getTime() + 90000).toISOString(),
+            type: 'AttorneyNoticeSent',
+            description: `Operational notice of fee assignment sent to ${selectedAttorney?.firmName ?? 'attorney'}.`,
         });
 
         if (contractType === 'No Contract') {
@@ -119,7 +126,7 @@ const Intake: React.FC = () => {
                 caseId: newCaseId,
                 timestamp: new Date(now.getTime() + 120000).toISOString(),
                 type: 'Alert',
-                description: 'Case opened without MedPayRez contract. Recovery risk is elevated. Operational guidance: execute documented fee agreement.',
+                description: 'Case opened without STAT Med Pay contract. Recovery risk is elevated. Operational guidance: execute documented fee agreement.',
             });
         }
 
@@ -308,10 +315,10 @@ const Intake: React.FC = () => {
                                         {contractType === 'No Contract' && <AlertTriangle className="text-amber-600 mt-0.5 flex-shrink-0" size={18} />}
                                         <div className="space-y-1 text-xs">
                                             <p className="font-semibold text-slate-800">Patients are never personally billed.</p>
-                                            <p className="text-slate-600">Provider holds documented fee rights through this contract.</p>
-                                            <p className="text-slate-600">Attorney will be notified of this contract upon case creation.</p>
+                                            <p className="text-slate-600">Provider holds a documented fee assignment tied to settlement proceeds.</p>
+                                            <p className="text-slate-600">Attorney will be notified of this assignment upon case creation.</p>
                                             {contractType === 'No Contract' && (
-                                                <p className="text-amber-700 font-semibold mt-2">⚠ Recovery risk is elevated without a contract. Consider upgrading to MedPayRez.</p>
+                                                <p className="text-amber-700 font-semibold mt-2">⚠ Recovery risk is elevated without a documented assignment. Consider upgrading to STAT Med Pay.</p>
                                             )}
                                         </div>
                                     </div>
@@ -335,7 +342,7 @@ const Intake: React.FC = () => {
                     <div className="space-y-8">
                         <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 font-serif text-slate-600 text-sm leading-relaxed">
                             <h3 className="font-bold text-slate-800 text-lg mb-4 font-sans border-b border-slate-200 pb-2">
-                                {contractType === 'MedPayRez' ? 'MedPayRez Enforceable Fee Recovery Agreement (Demo)' : 'Fee Recovery Agreement (Demo)'}
+                                {contractType === 'MedPayRez' ? 'STAT Med Pay Fee Assignment (Demo)' : 'Fee Assignment (Demo)'}
                             </h3>
                             <p className="mb-4">
                                 This agreement creates a contractual lien against any settlement, judgment, or verdict obtained by the Patient in favor of the Provider for medical services rendered.
@@ -344,13 +351,13 @@ const Intake: React.FC = () => {
                                 <strong>1. Contract-Backed Billing.</strong> Patient agrees that payment for services is deferred until resolution of the legal claim. Provider agrees not to pursue personal collection against Patient during the pendency of the claim.
                             </p>
                             <p className="mb-4">
-                                <strong>2. Documented Fee Assignment.</strong> Patient hereby assigns to Provider a portion of the settlement proceeds equal to the customary charge for services deemed necessary. This is a documented fee assignment, not a guarantee of payment.
+                                <strong>2. Documented Fee Assignment.</strong> Patient hereby assigns to Provider a portion of the settlement proceeds equal to the customary charge for services deemed necessary. This assignment is tied exclusively to settlement proceeds.
                             </p>
                             <p className="mb-4">
-                                <strong>3. Attorney Notification.</strong> The patient's attorney ({attorneys.find(a => a.id === attorneyId)?.firmName ?? 'selected firm'}) will be notified of this documented fee assignment as part of the contract-backed workflow.
+                                <strong>3. Attorney Notification.</strong> The patient's attorney ({attorneys.find(a => a.id === attorneyId)?.firmName ?? 'selected firm'}) will be notified of this documented fee assignment as part of the operational recovery flow.
                             </p>
                             <p>
-                                <em>Sign below to acknowledge terms. Patients are never personally billed.</em>
+                                <em>Sign below to acknowledge the assignment. Patients are never personally billed.</em>
                             </p>
                         </div>
 

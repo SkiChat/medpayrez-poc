@@ -240,7 +240,7 @@ const ParalegalDashboard: React.FC<ParalegalDashboardProps> = ({
                     </div>
                     <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tighter">Directory Empty</h2>
                     <p className="text-slate-400 max-w-sm leading-relaxed font-bold uppercase tracking-widest text-[10px] italic">
-                        Select an active case from the repository above to initialize the MedPayRez strategy engine.
+                        Select an active case from the repository above to initialize the STAT Med Pay strategy engine.
                     </p>
                 </div>
             )}

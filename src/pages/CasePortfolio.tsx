@@ -52,7 +52,7 @@ const CasePortfolio: React.FC = () => {
             caseId: c.id,
             timestamp: new Date().toISOString(),
             type: 'FollowUpScheduled',
-            description: `Follow-up scheduled with ${c.lawFirm ?? 'attorney'} for operational guidance on recovery status.`,
+            description: `Follow-up scheduled with ${c.lawFirm ?? 'attorney'} for operational guidance on assignment status.`,
         });
     };
 
@@ -115,22 +115,22 @@ const CasePortfolio: React.FC = () => {
                 </div>
             </div>
 
-            {/* Contract Type Quick-Filter Tab Strip */}
+            {/* Assignment Type Quick-Filter Tab Strip */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
                 {(['All', 'MedPayRez', 'Legacy LOP', 'No Contract'] as const).map(tab => (
                     <button
                         key={tab}
                         onClick={() => setContractTab(tab)}
                         className={`px-3 py-1.5 text-xs font-semibold rounded-full whitespace-nowrap transition-all min-h-[36px] ${contractTab === tab
-                                ? tab === 'No Contract'
-                                    ? 'bg-amber-500 text-white shadow-sm'
-                                    : tab === 'MedPayRez'
-                                        ? 'bg-blue-600 text-white shadow-sm shadow-blue-200'
-                                        : 'bg-slate-700 text-white shadow-sm'
-                                : 'bg-white border border-slate-200 text-slate-600 hover:border-blue-400 hover:text-blue-600'
+                            ? tab === 'No Contract'
+                                ? 'bg-amber-500 text-white shadow-sm'
+                                : tab === 'MedPayRez'
+                                    ? 'bg-blue-600 text-white shadow-sm shadow-blue-200'
+                                    : 'bg-slate-700 text-white shadow-sm'
+                            : 'bg-white border border-slate-200 text-slate-600 hover:border-blue-400 hover:text-blue-600'
                             }`}
                     >
-                        {tab}
+                        {tab === 'MedPayRez' ? 'STAT Assignment' : tab === 'No Contract' ? 'No Assignment' : tab}
                         {tab !== 'All' && (
                             <span className="ml-1.5 opacity-70">
                                 ({cases.filter(c => c.contractType === tab).length})

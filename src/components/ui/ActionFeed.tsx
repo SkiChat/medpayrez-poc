@@ -82,8 +82,8 @@ function generateActions(cases: Case[]): ActionItem[] {
         if (c.contractType === 'No Contract' && c.status !== 'Paid') {
             actions.push({
                 caseId: c.id, patientAlias: c.patientAlias,
-                action: 'Upgrade to MedPayRez contract', priority: 'medium',
-                reason: `No contract on file — recovery risk is elevated. Operational guidance: execute fee agreement.`,
+                action: 'Execute assignment of proceeds', priority: 'medium',
+                reason: `No assignment on file — recovery risk is elevated. Operational guidance: execute fee assignment.`,
                 lawFirm: c.lawFirm, attorneyName: c.attorneyName, ...ctx(c),
             });
             continue;

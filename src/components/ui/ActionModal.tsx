@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { X, CheckCircle2, ExternalLink, Sparkles, AlertCircle, Loader2 } from 'lucide-react';
 import { useDataStore } from '../../hooks/useDataStore';
 import type { WorkflowEventType, ContractType } from '../../types';
+import { mapContractLabel, formatCurrency } from '../../lib/displayUtils';
 
 // ─── Public interface (also consumed by ActionFeed) ──────────────────────────
 export interface ActionModalItem {
@@ -57,48 +58,48 @@ function buildDeterministicDraft(item: ActionModalItem): string {
     const type = resolveActionType(item.action);
 
     if (type === 'AttorneyNotice') {
-        return `RE: Documented Fee Assignment Notice — Case ${item.caseId}
+        return `RE: Operational Notice of Documented Fee Assignment — Case ${item.caseId}
 
 Dear ${atty} / ${firm},
 
-This notice confirms that ${item.patientAlias} has executed a MedPayRez fee recovery agreement with the treating provider. Pursuant to that agreement, the provider holds a documented fee assignment against any settlement, judgment, or verdict obtained on behalf of the patient.
+This notice serves to confirm that ${item.patientAlias} has executed a STAT Med Pay fee assignment agreement with the treating provider. Under this agreement, the provider holds a documented assignment of proceeds from any settlement, judgment, or verdict obtained for the patient.
 
-Please acknowledge receipt of this notice and confirm the expected timeline for resolution. The patient is not personally billed — recovery is pursued exclusively through contract-backed rights.
+Please acknowledge receipt of this assignment and confirm this case has been flagged for provider recovery. Patients are never personally billed for these services; recovery is pursued through the assignment-backed workflow.
 
-Action Required: ${item.action}
+Action Requested: ${item.action}
 Context: ${item.reason}
 
-Please respond within 10 business days with acknowledgment and next expected milestone.
+Please respond within 10 business days to confirm acknowledgment of this notice.
 
-[Demo document — no legal obligation created]`;
+[Demo notice — no legal obligation created]`;
     }
 
     if (type === 'DemandPacket') {
-        return `RE: Payment Demand — Case ${item.caseId}
+        return `RE: Demand for Payment from Settlement Proceeds — Case ${item.caseId}
 
 Dear ${atty} / ${firm},
 
-Our records indicate that Case ${item.caseId} (${item.patientAlias}) has reached a settlement stage with an outstanding lien of $${(item.lienAmount ?? 0).toLocaleString()}. We are formally requesting disbursement of the documented fee assignment amount from settlement proceeds.
+Our records indicate that Case ${item.caseId} (${item.patientAlias}) has reached a settlement stage with an outstanding balance of ${formatCurrency(item.lienAmount ?? 0)}. We are formally requesting disbursement of the assigned funds from the settlement proceeds.
 
-The patient is not personally billed. This demand is made pursuant to the executed fee recovery agreement on file.
+The patient is not personally billed. This request is made pursuant to the documented fee assignment on file, of which your firm was previously notified.
 
-Please confirm receipt and advise on the expected disbursement timeline.
+Please confirm receipt and provide an estimated timeline for the issuance of payment.
 
-[Demo document — no legal obligation created]`;
+[Demo demand — no legal obligation created]`;
     }
 
     // FollowUp
-    return `RE: Status Follow-up — Case ${item.caseId}
+    return `RE: Operational Status Update — Case ${item.caseId}
 
 Dear ${atty} / ${firm},
 
-We are following up on the status of Case ${item.caseId} (${item.patientAlias}). Our records indicate this case requires attention: ${item.reason}
+We are following up on the status of Case ${item.caseId} (${item.patientAlias}). Currently, our billing records indicate: ${item.reason}
 
-The patient is not personally billed. We are seeking an operational update on the current status and the next expected milestone.
+As a reminder, our provider holds a documented fee assignment for these services. We are seeking an operational update on the current status of the case and the next anticipated milestone.
 
-Please respond within 5 business days.
+Patients are never personally billed for these services. We look forward to your update.
 
-[Demo document — no legal obligation created]`;
+[Demo follow-up — no legal obligation created]`;
 }
 
 /**
@@ -123,9 +124,9 @@ function deriveDraftFromInsight(
 
 Dear ${atty} / ${firm},
 
-${recommendation ? `${recommendation}\n\n` : ''}${actions ? `Recommended next steps:\n• ${actions}\n\n` : ''}Context: ${item.reason}
+${recommendation ? `${recommendation}\n\n` : ''}${actions ? `Recommended operational steps:\n• ${actions}\n\n` : ''}Context: ${item.reason}
 
-The patient is not personally billed. Recovery is pursued through contract-backed rights and documented fee assignments. Please acknowledge receipt and advise on the expected timeline for resolution.
+Patients are never personally billed. Recovery is pursued through assignment-backed workflow and documented fee assignments. Please acknowledge this notice and advise on the anticipated timeline for settlement disbursement.
 
 [AI-assisted draft — demo only, no legal obligation created]`;
 }
@@ -296,7 +297,7 @@ const ActionModal: React.FC<ActionModalProps> = ({ item, onClose }) => {
                                         : item.contractType === 'No Contract'
                                             ? 'bg-amber-50 text-amber-700 border-amber-200'
                                             : 'bg-slate-50 text-slate-600 border-slate-200'
-                                        }`}>{item.contractType}</span>
+                                        }`}>{mapContractLabel(item.contractType)}</span>
                                 )}
                                 {item.recoveryRisk && (
                                     <span className={`text-[10px] font-semibold px-2 py-1 rounded border ${item.recoveryRisk === 'High'
@@ -358,7 +359,7 @@ const ActionModal: React.FC<ActionModalProps> = ({ item, onClose }) => {
                             </div>
 
                             <p className="text-[10px] text-slate-400 leading-relaxed">
-                                Patients are never personally billed. Recovery is pursued through contract-backed rights and documented fee assignments. This is a demo document only.
+                                Patients are never personally billed. Recovery is pursued through assignment-backed workflow and documented fee assignments. This is a demo document only.
                             </p>
                         </div>
 

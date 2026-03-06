@@ -13,6 +13,7 @@ import { generateRuleBasedInsights } from '../lib/insights';
 import clsx from 'clsx';
 import type { WorkflowEventType, AIInsight } from '../types';
 import InvoiceSummaryCard from '../components/ui/InvoiceSummaryCard';
+import { formatCurrency } from '../lib/displayUtils';
 
 const CaseDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -34,7 +35,26 @@ const CaseDetail: React.FC = () => {
 
     const ruleInsights = generateRuleBasedInsights(caseItem);
 
+    const noticeEvent = events.find(e => e.type === 'AttorneyNoticeSent');
+    const ackEvent = events.find(e => e.type === 'AttorneyAcknowledged');
+    const signedEvent = events.find(e => e.type === 'AssignmentSigned' || e.type === 'ContractSigned');
+    const demandEvent = events.find(e => e.type === 'DemandSent');
+    const settlementEvent = events.find(e => e.type === 'SettlementReached');
     const invoiceEvent = events.find(e => e.type === 'InvoiceIssued');
+
+    const daysSinceNotice = noticeEvent
+        ? Math.floor((new Date().getTime() - new Date(noticeEvent.timestamp).getTime()) / (1000 * 60 * 60 * 24))
+        : null;
+
+    const readinessSteps = [
+        { label: 'Assignment signed', complete: caseItem.contractStatus === 'Executed' || !!signedEvent },
+        { label: 'Attorney notified', complete: !!noticeEvent || !!events.find(e => e.type === 'NoticeGenerated') },
+        { label: 'Attorney acknowledged', complete: caseItem.attorneyAcknowledged === true || !!ackEvent },
+        { label: 'Invoice issued', complete: !!invoiceEvent },
+        { label: 'Demand sent', complete: !!demandEvent },
+        { label: 'Settlement reached', complete: caseItem.status === 'Settled' || !!settlementEvent },
+    ];
+    const stepsComplete = readinessSteps.filter(s => s.complete).length;
     const isSettled = caseItem.status === 'Settled' || caseItem.status === 'Paid';
 
     // Actions
@@ -122,7 +142,7 @@ const CaseDetail: React.FC = () => {
                             <ContractTypeBadge type={caseItem.contractType} />
                             {caseItem.contractType === 'No Contract' && (
                                 <span className="text-[10px] font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">
-                                    No fee agreement on file
+                                    No documented assignment on file
                                 </span>
                             )}
                         </div>
@@ -136,7 +156,7 @@ const CaseDetail: React.FC = () => {
                         <div className="flex flex-wrap items-center gap-x-5 gap-y-1 mt-3 text-xs text-slate-400">
                             <span>
                                 <span className="font-semibold text-slate-500">Managed by:</span>{' '}
-                                {caseItem.assignedTo ?? 'MedPayRez Case Team'}
+                                {caseItem.assignedTo ?? 'STAT Med Pay Case Team'}
                             </span>
                             <span>
                                 <span className="font-semibold text-slate-500">Mode:</span>{' '}
@@ -147,7 +167,7 @@ const CaseDetail: React.FC = () => {
                     <div className="flex items-center gap-3">
                         <div className="text-right mr-4">
                             <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Lien Amount</p>
-                            <p className="text-2xl font-bold text-slate-900">${caseItem.lienAmount.toLocaleString()}</p>
+                            <p className="text-2xl font-bold text-slate-900">{formatCurrency(caseItem.lienAmount)}</p>
                         </div>
                         <StatusBadge status={caseItem.status} />
                     </div>
@@ -192,6 +212,83 @@ const CaseDetail: React.FC = () => {
                 {/* Left Column: Workflow & Invoicing */}
                 <div className="lg:col-span-2 space-y-8">
 
+                    {/* New: Status Cards Row */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {/* Attorney Notice & Acknowledgment */}
+                        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                            <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                <Send size={16} className="text-blue-600" /> Attorney Notice & Acknowledgment
+                            </h3>
+                            <div className="space-y-3">
+                                <div className="flex justify-between text-xs">
+                                    <span className="text-slate-500">Assignment Status:</span>
+                                    <span className={clsx("font-bold", signedEvent ? "text-emerald-600" : "text-slate-400")}>
+                                        {signedEvent ? 'Signed' : caseItem.contractStatus === 'Executed' ? 'Signed' : 'Not yet recorded'}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between text-xs">
+                                    <span className="text-slate-500">Notice Sent:</span>
+                                    <span className={clsx("font-bold", noticeEvent ? "text-emerald-600" : "text-slate-400")}>
+                                        {noticeEvent ? `Yes (${new Date(noticeEvent.timestamp).toLocaleDateString()})` : 'No'}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between text-xs">
+                                    <span className="text-slate-500">Attorney Acknowledged:</span>
+                                    <span className={clsx("font-bold", (caseItem.attorneyAcknowledged || ackEvent) ? "text-emerald-600" : "text-slate-400")}>
+                                        {(caseItem.attorneyAcknowledged || ackEvent)
+                                            ? `Yes ${ackEvent ? `(${new Date(ackEvent.timestamp).toLocaleDateString()})` : ''}`
+                                            : 'No'}
+                                    </span>
+                                </div>
+                                {daysSinceNotice !== null && (
+                                    <div className="flex justify-between text-xs pt-1 border-t border-slate-50">
+                                        <span className="text-slate-500">Days Since Notice:</span>
+                                        <span className="font-mono font-bold text-slate-700">{daysSinceNotice}d</span>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="flex gap-2 mt-4 pt-4 border-t border-slate-50">
+                                <button
+                                    onClick={() => handleAddEvent('AttorneyNoticeSent', `Operational notice of fee assignment sent to ${attorney?.firmName}.`)}
+                                    className="flex-1 py-2 bg-blue-50 text-blue-700 rounded-lg text-[10px] font-bold hover:bg-blue-100 transition-colors"
+                                >
+                                    Send Attorney Notice
+                                </button>
+                                <button
+                                    onClick={() => handleAddEvent('AttorneyAcknowledged', `Attorney acknowledgment received for fee assignment.`)}
+                                    className="flex-1 py-2 bg-emerald-50 text-emerald-700 rounded-lg text-[10px] font-bold hover:bg-emerald-100 transition-colors"
+                                >
+                                    Mark Acknowledged
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Proceeds Recovery Readiness */}
+                        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+                            <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                <CheckCircle2 size={16} className="text-emerald-600" /> Proceeds Recovery Readiness
+                            </h3>
+                            <div className="flex-1 space-y-2">
+                                {readinessSteps.map((step, idx) => (
+                                    <div key={idx} className="flex items-center gap-2 text-xs">
+                                        {step.complete ? (
+                                            <CheckCircle2 size={14} className="text-emerald-500 flex-shrink-0" />
+                                        ) : (
+                                            <div className="w-3.5 h-3.5 rounded-full border border-slate-300 flex-shrink-0"></div>
+                                        )}
+                                        <span className={clsx(step.complete ? "text-slate-700 font-medium" : "text-slate-400")}>
+                                            {step.label}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="mt-4 pt-3 border-t border-slate-50 text-[10px] text-slate-400 font-bold flex justify-between items-center">
+                                <span>STATUS SUMMARY</span>
+                                <span className="text-blue-600 bg-blue-50 px-2 py-0.5 rounded">{stepsComplete} of 6 steps complete</span>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* D. Invoicing Block */}
                     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
                         <div className="bg-slate-50 px-6 py-4 border-b border-slate-200 flex justify-between items-center">
@@ -211,7 +308,7 @@ const CaseDetail: React.FC = () => {
                                         <p className="text-sm text-slate-500">Issued on {new Date(invoiceEvent.timestamp).toLocaleDateString()}</p>
                                     </div>
                                     <div className="text-right">
-                                        <p className="text-xl font-bold text-slate-900">${caseItem.lienAmount.toLocaleString()}</p>
+                                        <p className="text-xl font-bold text-slate-900">{formatCurrency(caseItem.lienAmount)}</p>
                                         <p className="text-xs text-slate-500">Scheduled for recovery</p>
                                     </div>
                                 </div>
@@ -222,7 +319,7 @@ const CaseDetail: React.FC = () => {
                                         <p className="text-sm text-slate-500">Generate invoice to begin recovery workflow.</p>
                                     </div>
                                     <button
-                                        onClick={() => handleAddEvent('InvoiceIssued', `Invoice for $${caseItem.lienAmount} generated and sent.`)}
+                                        onClick={() => handleAddEvent('InvoiceIssued', `Invoice for ${formatCurrency(caseItem.lienAmount)} generated and sent.`)}
                                         className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors"
                                     >
                                         <FileText size={16} /> Issue Invoice (Demo)

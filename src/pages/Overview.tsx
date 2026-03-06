@@ -106,7 +106,7 @@ const CaseRow: React.FC<CaseRowProps> = ({ c, getAge, formatCurrency, navigate }
             caseId: c.id,
             timestamp: new Date().toISOString(),
             type: 'FollowUpScheduled',
-            description: `Follow-up scheduled with ${c.lawFirm ?? 'attorney'} for operational guidance on recovery status.`,
+            description: `Follow-up scheduled with ${c.lawFirm ?? 'attorney'} for operational guidance on assignment status.`,
         });
     };
 
@@ -351,7 +351,7 @@ const Overview: React.FC = () => {
                     <div className="bg-slate-50 border border-slate-200 border-t-0 rounded-b-xl p-4">
                         <ActionFeed cases={cases} />
                         <p className="text-[10px] text-slate-400 leading-relaxed mt-3">
-                            Patients are never personally billed. Recovery is pursued through contract-backed rights and documented fee assignments.
+                            Patients are never personally billed. Recovery is pursued through documented fee assignments and contract-backed rights.
                         </p>
                     </div>
                 )}

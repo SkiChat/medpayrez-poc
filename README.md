@@ -1,4 +1,4 @@
-# MedPayRez Provider Portal
+# STATMedPay Provider Portal
 
 ## Local Development with Netlify Functions
 

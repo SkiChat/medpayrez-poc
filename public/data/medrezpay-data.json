@@ -344,7 +344,7 @@
             "caseId": "case_1001",
             "timestamp": "2025-06-15T10:00:00Z",
             "type": "ContractSigned",
-            "description": "Patient signed MedPayRez fee recovery agreement."
+            "description": "Patient signed STAT Med Pay fee recovery agreement."
         },
         {
             "caseId": "case_1001",
@@ -374,7 +374,7 @@
             "caseId": "case_1002",
             "timestamp": "2025-08-10T12:30:00Z",
             "type": "ContractSigned",
-            "description": "MedPayRez digital contract executed."
+            "description": "STAT Med Pay digital contract executed."
         },
         {
             "caseId": "case_1002",
@@ -434,7 +434,7 @@
             "caseId": "case_1004",
             "timestamp": "2025-05-05T10:15:00Z",
             "type": "ContractSigned",
-            "description": "Patient signed MedPayRez representation agreement."
+            "description": "Patient signed STAT Med Pay representation agreement."
         },
         {
             "caseId": "case_1004",
@@ -464,7 +464,7 @@
             "caseId": "case_1005",
             "timestamp": "2025-07-22T14:00:00Z",
             "type": "Alert",
-            "description": "Case opened without MedPayRez contract. Recovery risk: High."
+            "description": "Case opened without STAT Med Pay contract. Recovery risk: High."
         },
         {
             "caseId": "case_1005",
@@ -494,7 +494,7 @@
             "caseId": "case_1006",
             "timestamp": "2025-02-14T11:00:00Z",
             "type": "ContractSigned",
-            "description": "MedPayRez lien agreement executed."
+            "description": "STAT Med Pay lien agreement executed."
         },
         {
             "caseId": "case_1006",
@@ -530,7 +530,7 @@
             "caseId": "case_1007",
             "timestamp": "2025-03-10T10:00:00Z",
             "type": "ContractSigned",
-            "description": "MedPayRez signed forms received."
+            "description": "STAT Med Pay signed forms received."
         },
         {
             "caseId": "case_1007",
@@ -566,7 +566,7 @@
             "caseId": "case_1008",
             "timestamp": "2025-01-15T16:00:00Z",
             "type": "ContractSigned",
-            "description": "MedPayRez fee agreement and power of attorney signed."
+            "description": "STAT Med Pay fee agreement and power of attorney signed."
         },
         {
             "caseId": "case_1008",
@@ -626,7 +626,7 @@
             "caseId": "case_1010",
             "timestamp": "2025-06-01T09:15:00Z",
             "type": "ContractSigned",
-            "description": "MedPayRez lien executed."
+            "description": "STAT Med Pay lien executed."
         },
         {
             "caseId": "case_1010",
