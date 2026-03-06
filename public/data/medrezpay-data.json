@@ -348,6 +348,18 @@
         },
         {
             "caseId": "case_1001",
+            "timestamp": "2025-06-15T10:30:00Z",
+            "type": "AttorneyNoticeSent",
+            "description": "Assignment notice sent to Smith & Reyes Injury Law."
+        },
+        {
+            "caseId": "case_1001",
+            "timestamp": "2025-06-16T09:00:00Z",
+            "type": "AttorneyAcknowledged",
+            "description": "Attorney acknowledged documented fee assignment."
+        },
+        {
+            "caseId": "case_1001",
             "timestamp": "2025-06-20T14:30:00Z",
             "type": "RecordsRequested",
             "description": "Attorney requested itemized billing."

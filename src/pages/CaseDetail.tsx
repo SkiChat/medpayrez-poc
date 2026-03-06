@@ -43,7 +43,7 @@ const CaseDetail: React.FC = () => {
     const invoiceEvent = events.find(e => e.type === 'InvoiceIssued');
 
     const daysSinceNotice = noticeEvent
-        ? Math.floor((new Date().getTime() - new Date(noticeEvent.timestamp).getTime()) / (1000 * 60 * 60 * 24))
+        ? Math.max(0, Math.floor((new Date().getTime() - new Date(noticeEvent.timestamp).getTime()) / (1000 * 60 * 60 * 24)))
         : null;
 
     const readinessSteps = [
