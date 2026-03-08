@@ -3,12 +3,12 @@ import { CheckCircle2, Circle } from 'lucide-react';
 import clsx from 'clsx';
 import type { Case, CaseEvent } from '../../types';
 
-interface ContractStrengthPanelProps {
+interface ContractStrengthCardProps {
     caseItem: Case;
     events: CaseEvent[];
 }
 
-const ContractStrengthPanel: React.FC<ContractStrengthPanelProps> = ({ caseItem, events }) => {
+const ContractStrengthCard: React.FC<ContractStrengthCardProps> = ({ caseItem, events }) => {
     const noticeEvent = events.find(e => e.type === 'AttorneyNoticeSent' || e.type === 'NoticeGenerated');
     const ackEvent = events.find(e => e.type === 'AttorneyAcknowledged');
     const signedEvent = events.find(e => e.type === 'AssignmentSigned' || e.type === 'ContractSigned');
@@ -58,7 +58,7 @@ const ContractStrengthPanel: React.FC<ContractStrengthPanelProps> = ({ caseItem,
             <div className="mt-6 pt-4 border-t border-slate-50">
                 <div className="flex justify-between items-center mb-1.5">
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Readiness Score</span>
-                    <span className="text-xs font-bold text-blue-600">{stepsComplete} / 5 Steps Complete</span>
+                    <span className="text-xs font-bold text-blue-600">{stepsComplete} / 5 Milestones Complete</span>
                 </div>
                 <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                     <div
@@ -71,4 +71,4 @@ const ContractStrengthPanel: React.FC<ContractStrengthPanelProps> = ({ caseItem,
     );
 };
 
-export default ContractStrengthPanel;
+export default ContractStrengthCard;

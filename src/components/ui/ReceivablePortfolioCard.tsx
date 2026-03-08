@@ -1,5 +1,5 @@
 import React from 'react';
-import { DollarSign, TrendingUp, Calendar, Clock, ArrowUpRight } from 'lucide-react';
+import { DollarSign, TrendingUp, Calendar, ArrowUpRight } from 'lucide-react';
 import type { Case } from '../../types';
 
 interface ReceivablePortfolioCardProps {
@@ -14,12 +14,8 @@ const ReceivablePortfolioCard: React.FC<ReceivablePortfolioCardProps> = ({ cases
     }, 0);
 
     const expected90DayCashFlow = cases
-        .filter(c => c.predictedTimeToSettlementDays < 90 && c.status !== 'Paid')
+        .filter(c => c.predictedTimeToSettlementDays <= 90 && c.status !== 'Paid')
         .reduce((sum, c) => sum + (c.lienAmount * (c.predictedRecoveryPercent / 100)), 0);
-
-    const avgSettlementTimeline = cases.length > 0
-        ? cases.reduce((sum, c) => sum + c.predictedTimeToSettlementDays, 0) / cases.length
-        : 0;
 
     const formatCurrency = (amount: number) =>
         new Intl.NumberFormat('en-US', {
@@ -41,12 +37,12 @@ const ReceivablePortfolioCard: React.FC<ReceivablePortfolioCardProps> = ({ cases
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
+            <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
                 {/* Total Receivables */}
                 <div className="p-6 hover:bg-slate-50/50 transition-colors">
                     <div className="flex items-center gap-2 mb-2">
                         <DollarSign className="w-4 h-4 text-slate-400" />
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total PI Receivables</span>
+                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Receivables</span>
                     </div>
                     <div className="flex items-baseline gap-2">
                         <h4 className="text-2xl font-bold text-slate-900">{formatCurrency(totalPIReceivables)}</h4>
@@ -74,24 +70,12 @@ const ReceivablePortfolioCard: React.FC<ReceivablePortfolioCardProps> = ({ cases
                 <div className="p-6 hover:bg-slate-50/50 transition-colors">
                     <div className="flex items-center gap-2 mb-2">
                         <Calendar className="w-4 h-4 text-blue-500" />
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Expected 90-Day Cash Flow</span>
+                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Expected Cash ≤90 Days</span>
                     </div>
                     <div className="flex items-baseline gap-2">
                         <h4 className="text-2xl font-bold text-slate-900">{formatCurrency(expected90DayCashFlow)}</h4>
                     </div>
                     <p className="text-[10px] text-slate-400 mt-1 font-medium">Projected near-term liquidity</p>
-                </div>
-
-                {/* Settlement Timeline */}
-                <div className="p-6 hover:bg-slate-50/50 transition-colors">
-                    <div className="flex items-center gap-2 mb-2">
-                        <Clock className="w-4 h-4 text-amber-500" />
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Avg Settlement Timeline</span>
-                    </div>
-                    <div className="flex items-baseline gap-2">
-                        <h4 className="text-2xl font-bold text-slate-900">{Math.round(avgSettlementTimeline)} Days</h4>
-                    </div>
-                    <p className="text-[10px] text-slate-400 mt-1 font-medium">Portfolio-wide cycle time</p>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@ import clsx from 'clsx';
 const NAV_LINKS = [
     { to: '/', end: true, icon: LayoutDashboard, label: 'Overview' },
     { to: '/cases', end: false, icon: FolderKanban, label: 'PI Cases' },
-    { to: '/receivables', end: false, icon: Landmark, label: 'Receivables Ledger' },
+    { to: '/receivables', end: false, icon: Landmark, label: 'Receivables' },
     { to: '/analytics', end: false, icon: BarChart3, label: 'PI Recovery Analytics' },
 ];
 

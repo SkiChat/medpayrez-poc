@@ -13,10 +13,11 @@ import { generateRuleBasedInsights } from '../lib/insights';
 import clsx from 'clsx';
 import type { WorkflowEventType, AIInsight } from '../types';
 import InvoiceSummaryCard from '../components/ui/InvoiceSummaryCard';
-import ContractStrengthPanel from '../components/ui/ContractStrengthPanel';
+import ContractStrengthCard from '../components/ui/ContractStrengthCard';
 import SettlementWatchCard from '../components/ui/SettlementWatchCard';
+import RecoveryComparisonCard from '../components/ui/RecoveryComparisonCard';
 import DocumentGeneratorModal from '../components/ui/DocumentGeneratorModal';
-import LiquidityPanel from '../components/ui/LiquidityPanel';
+import ReceivableLiquidityCard from '../components/ui/ReceivableLiquidityCard';
 import { formatCurrency } from '../lib/displayUtils';
 
 const CaseDetail: React.FC = () => {
@@ -197,15 +198,14 @@ const CaseDetail: React.FC = () => {
                 </div>
             </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <ContractStrengthCard caseItem={caseItem} events={events} />
+                <RecoveryComparisonCard caseItem={caseItem} />
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Left Column: Workflow & Invoicing */}
                 <div className="lg:col-span-2 space-y-8">
-
-                    {/* New: Status Cards Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <ContractStrengthPanel caseItem={caseItem} events={events} />
-                        <SettlementWatchCard caseItem={caseItem} events={events} />
-                    </div>
 
                     {/* D. Invoicing Block */}
                     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
@@ -303,7 +303,8 @@ const CaseDetail: React.FC = () => {
 
                 {/* Right Column: Actions & Insights */}
                 <div className="space-y-6">
-                    <LiquidityPanel caseItem={caseItem} />
+                    <SettlementWatchCard caseItem={caseItem} events={events} />
+                    <ReceivableLiquidityCard caseItem={caseItem} />
 
                     {/* E. Action Panel */}
                     <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
