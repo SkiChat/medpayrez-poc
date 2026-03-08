@@ -4,7 +4,7 @@ import {
     PieChart, Pie, Cell
 } from 'recharts';
 import { useDataStore } from '../hooks/useDataStore';
-import AttorneyPerformanceTable from '../components/ui/AttorneyPerformanceTable';
+import AttorneyPerformanceIntelligence from '../components/ui/AttorneyPerformanceIntelligence';
 
 const Analytics: React.FC = () => {
     const { selectors, isLoading } = useDataStore();
@@ -205,11 +205,18 @@ const Analytics: React.FC = () => {
                 </div>
             </div>
 
-            {/* Attorney Performance Table */}
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <h3 className="font-bold text-slate-900 mb-4">Attorney Performance</h3>
-                <p className="text-xs text-slate-400 mb-4">Avg days to settlement, reduction %, and active case count by law firm. Use for operational guidance on follow-up priority.</p>
-                <AttorneyPerformanceTable />
+            {/* Attorney Performance Intelligence */}
+            <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                    <h3 className="font-bold text-slate-900">Attorney Performance Intelligence</h3>
+                </div>
+                <p className="text-xs text-slate-500 max-w-2xl -mt-2">
+                    Avg days to acknowledge assignment, settlement duration, and fee recovery performance across all active law firms in your portfolio.
+                </p>
+                <AttorneyPerformanceIntelligence
+                    cases={cases}
+                    getCaseEvents={(caseId) => selectors?.getCaseEvents(caseId) || []}
+                />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FolderKanban, BarChart3, FilePlus, Menu, X } from 'lucide-react';
+import { LayoutDashboard, FolderKanban, BarChart3, FilePlus, Menu, X, Landmark } from 'lucide-react';
 import clsx from 'clsx';
 
 const NAV_LINKS = [
     { to: '/', end: true, icon: LayoutDashboard, label: 'Overview' },
     { to: '/cases', end: false, icon: FolderKanban, label: 'PI Cases' },
+    { to: '/receivables', end: false, icon: Landmark, label: 'Receivables Ledger' },
     { to: '/analytics', end: false, icon: BarChart3, label: 'PI Recovery Analytics' },
 ];
 

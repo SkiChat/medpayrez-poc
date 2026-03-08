@@ -6,6 +6,7 @@ import CasePortfolio from './pages/CasePortfolio';
 import CaseDetail from './pages/CaseDetail';
 import Intake from './pages/Intake';
 import Analytics from './pages/Analytics';
+import Receivables from './pages/Receivables';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
           <Route path="cases/:id" element={<CaseDetail />} />
           <Route path="intake" element={<Intake />} />
           <Route path="analytics" element={<Analytics />} />
+          <Route path="receivables" element={<Receivables />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

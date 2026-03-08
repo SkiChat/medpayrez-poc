@@ -13,6 +13,10 @@ import { generateRuleBasedInsights } from '../lib/insights';
 import clsx from 'clsx';
 import type { WorkflowEventType, AIInsight } from '../types';
 import InvoiceSummaryCard from '../components/ui/InvoiceSummaryCard';
+import ContractStrengthPanel from '../components/ui/ContractStrengthPanel';
+import SettlementWatchCard from '../components/ui/SettlementWatchCard';
+import DocumentGeneratorModal from '../components/ui/DocumentGeneratorModal';
+import LiquidityPanel from '../components/ui/LiquidityPanel';
 import { formatCurrency } from '../lib/displayUtils';
 
 const CaseDetail: React.FC = () => {
@@ -23,6 +27,10 @@ const CaseDetail: React.FC = () => {
     // Local state for AI Insight
     const [aiInsight, setAiInsight] = useState<AIInsight | null>(null);
     const [isGeneratingAi, setIsGeneratingAi] = useState(false);
+    const [docModal, setDocModal] = useState<{ open: boolean; type: 'LienStatement' | 'DemandLetter' | 'MedicalNarrative' | 'SettlementReconciliation' | null }>({
+        open: false,
+        type: null
+    });
 
     if (isLoading) return <div className="p-12 text-center text-slate-400">Loading Case...</div>;
 
@@ -34,27 +42,8 @@ const CaseDetail: React.FC = () => {
     const events = selectors?.getCaseEvents(caseItem.id) || [];
 
     const ruleInsights = generateRuleBasedInsights(caseItem);
-
-    const noticeEvent = events.find(e => e.type === 'AttorneyNoticeSent');
-    const ackEvent = events.find(e => e.type === 'AttorneyAcknowledged');
-    const signedEvent = events.find(e => e.type === 'AssignmentSigned' || e.type === 'ContractSigned');
-    const demandEvent = events.find(e => e.type === 'DemandSent');
-    const settlementEvent = events.find(e => e.type === 'SettlementReached');
     const invoiceEvent = events.find(e => e.type === 'InvoiceIssued');
 
-    const daysSinceNotice = noticeEvent
-        ? Math.max(0, Math.floor((new Date().getTime() - new Date(noticeEvent.timestamp).getTime()) / (1000 * 60 * 60 * 24)))
-        : null;
-
-    const readinessSteps = [
-        { label: 'Assignment signed', complete: caseItem.contractStatus === 'Executed' || !!signedEvent },
-        { label: 'Attorney notified', complete: !!noticeEvent || !!events.find(e => e.type === 'NoticeGenerated') },
-        { label: 'Attorney acknowledged', complete: caseItem.attorneyAcknowledged === true || !!ackEvent },
-        { label: 'Invoice issued', complete: !!invoiceEvent },
-        { label: 'Demand sent', complete: !!demandEvent },
-        { label: 'Settlement reached', complete: caseItem.status === 'Settled' || !!settlementEvent },
-    ];
-    const stepsComplete = readinessSteps.filter(s => s.complete).length;
     const isSettled = caseItem.status === 'Settled' || caseItem.status === 'Paid';
 
     // Actions
@@ -214,79 +203,8 @@ const CaseDetail: React.FC = () => {
 
                     {/* New: Status Cards Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {/* Attorney Notice & Acknowledgment */}
-                        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                            <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
-                                <Send size={16} className="text-blue-600" /> Attorney Notice & Acknowledgment
-                            </h3>
-                            <div className="space-y-3">
-                                <div className="flex justify-between text-xs">
-                                    <span className="text-slate-500">Assignment Status:</span>
-                                    <span className={clsx("font-bold", signedEvent ? "text-emerald-600" : "text-slate-400")}>
-                                        {signedEvent ? 'Signed' : caseItem.contractStatus === 'Executed' ? 'Signed' : 'Not yet recorded'}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between text-xs">
-                                    <span className="text-slate-500">Notice Sent:</span>
-                                    <span className={clsx("font-bold", noticeEvent ? "text-emerald-600" : "text-slate-400")}>
-                                        {noticeEvent ? `Yes (${new Date(noticeEvent.timestamp).toLocaleDateString()})` : 'No'}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between text-xs">
-                                    <span className="text-slate-500">Attorney Acknowledged:</span>
-                                    <span className={clsx("font-bold", (caseItem.attorneyAcknowledged || ackEvent) ? "text-emerald-600" : "text-slate-400")}>
-                                        {(caseItem.attorneyAcknowledged || ackEvent)
-                                            ? `Yes ${ackEvent ? `(${new Date(ackEvent.timestamp).toLocaleDateString()})` : ''}`
-                                            : 'No'}
-                                    </span>
-                                </div>
-                                {daysSinceNotice !== null && (
-                                    <div className="flex justify-between text-xs pt-1 border-t border-slate-50">
-                                        <span className="text-slate-500">Days Since Notice:</span>
-                                        <span className="font-mono font-bold text-slate-700">{daysSinceNotice}d</span>
-                                    </div>
-                                )}
-                            </div>
-                            <div className="flex gap-2 mt-4 pt-4 border-t border-slate-50">
-                                <button
-                                    onClick={() => handleAddEvent('AttorneyNoticeSent', `Operational notice of fee assignment sent to ${attorney?.firmName}.`)}
-                                    className="flex-1 py-2 bg-blue-50 text-blue-700 rounded-lg text-[10px] font-bold hover:bg-blue-100 transition-colors"
-                                >
-                                    Send Attorney Notice
-                                </button>
-                                <button
-                                    onClick={() => handleAddEvent('AttorneyAcknowledged', `Attorney acknowledgment received for fee assignment.`)}
-                                    className="flex-1 py-2 bg-emerald-50 text-emerald-700 rounded-lg text-[10px] font-bold hover:bg-emerald-100 transition-colors"
-                                >
-                                    Mark Acknowledged
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Proceeds Recovery Readiness */}
-                        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
-                            <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
-                                <CheckCircle2 size={16} className="text-emerald-600" /> Proceeds Recovery Readiness
-                            </h3>
-                            <div className="flex-1 space-y-2">
-                                {readinessSteps.map((step, idx) => (
-                                    <div key={idx} className="flex items-center gap-2 text-xs">
-                                        {step.complete ? (
-                                            <CheckCircle2 size={14} className="text-emerald-500 flex-shrink-0" />
-                                        ) : (
-                                            <div className="w-3.5 h-3.5 rounded-full border border-slate-300 flex-shrink-0"></div>
-                                        )}
-                                        <span className={clsx(step.complete ? "text-slate-700 font-medium" : "text-slate-400")}>
-                                            {step.label}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="mt-4 pt-3 border-t border-slate-50 text-[10px] text-slate-400 font-bold flex justify-between items-center">
-                                <span>STATUS SUMMARY</span>
-                                <span className="text-blue-600 bg-blue-50 px-2 py-0.5 rounded">{stepsComplete} of 6 steps complete</span>
-                            </div>
-                        </div>
+                        <ContractStrengthPanel caseItem={caseItem} events={events} />
+                        <SettlementWatchCard caseItem={caseItem} events={events} />
                     </div>
 
                     {/* D. Invoicing Block */}
@@ -385,6 +303,7 @@ const CaseDetail: React.FC = () => {
 
                 {/* Right Column: Actions & Insights */}
                 <div className="space-y-6">
+                    <LiquidityPanel caseItem={caseItem} />
 
                     {/* E. Action Panel */}
                     <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
@@ -409,6 +328,36 @@ const CaseDetail: React.FC = () => {
                             >
                                 Mark Payment Received <CheckCircle2 size={14} className="text-emerald-600" />
                             </button>
+
+                            <div className="pt-4 mt-2 border-t border-slate-100">
+                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Document Generation</p>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <button
+                                        onClick={() => setDocModal({ open: true, type: 'LienStatement' })}
+                                        className="text-[10px] font-bold py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:bg-white hover:border-blue-400 hover:text-blue-600 transition-all"
+                                    >
+                                        Lien Statement
+                                    </button>
+                                    <button
+                                        onClick={() => setDocModal({ open: true, type: 'DemandLetter' })}
+                                        className="text-[10px] font-bold py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:bg-white hover:border-blue-400 hover:text-blue-600 transition-all"
+                                    >
+                                        Demand Letter
+                                    </button>
+                                    <button
+                                        onClick={() => setDocModal({ open: true, type: 'MedicalNarrative' })}
+                                        className="text-[10px] font-bold py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:bg-white hover:border-blue-400 hover:text-blue-600 transition-all"
+                                    >
+                                        Medical Narrative
+                                    </button>
+                                    <button
+                                        onClick={() => setDocModal({ open: true, type: 'SettlementReconciliation' })}
+                                        className="text-[10px] font-bold py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:bg-white hover:border-blue-400 hover:text-blue-600 transition-all"
+                                    >
+                                        Reconciliation
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -519,6 +468,13 @@ const CaseDetail: React.FC = () => {
 
                 </div>
             </div>
+            {docModal.open && docModal.type && (
+                <DocumentGeneratorModal
+                    caseItem={caseItem}
+                    docType={docModal.type}
+                    onClose={() => setDocModal({ open: false, type: null })}
+                />
+            )}
         </div>
     );
 };

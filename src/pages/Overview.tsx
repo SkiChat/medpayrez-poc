@@ -9,6 +9,7 @@ import { useDataStore } from '../hooks/useDataStore';
 import ContractTypeBadge from '../components/ui/ContractTypeBadge';
 import RecoveryRiskBadge from '../components/ui/RecoveryRiskBadge';
 import ActionFeed from '../components/ui/ActionFeed';
+import ReceivablePortfolioCard from '../components/ui/ReceivablePortfolioCard';
 import type { Case } from '../types';
 
 // ─── Mobile Case Card ────────────────────────────────────────────────────────
@@ -327,6 +328,9 @@ const Overview: React.FC = () => {
                     <p className="text-[10px] mt-2 text-slate-400 uppercase font-bold tracking-widest">Days to Cash Trend</p>
                 </div>
             </section>
+
+            {/* ── Feature 1: PI Receivable Portfolio ── */}
+            <ReceivablePortfolioCard cases={cases} />
 
             {/* ── Action Feed: full-width on mobile/tablet, right panel on xl ── */}
             {/* Mobile / Tablet: collapsible panel ABOVE the table */}
